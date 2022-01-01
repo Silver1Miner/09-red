@@ -8,11 +8,43 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://src/World/Grid.gd"
+} ]
+_global_script_class_icons={
+"Grid": ""
+}
+
 [application]
 
 config/name="Red Nine"
 config/description="Tactical War"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=640
+window/size/height=400
+window/size/test_width=640
+window/size/test_height=400
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[input]
+
+click_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+click_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [physics]
 
