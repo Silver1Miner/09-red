@@ -1,20 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/World/Cursor/Cursor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Terrain/Terrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/World/World.gd" type="Script" id=3]
 [ext_resource path="res://src/World/UI/PathDisplay.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/World/PathFinder.gd" type="Script" id=5]
+[ext_resource path="res://src/World/Pawns/Pawn.tscn" type="PackedScene" id=6]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
 
+[node name="PathFinder" type="Node" parent="."]
+script = ExtResource( 5 )
+
 [node name="Terrain" parent="." instance=ExtResource( 2 )]
 
 [node name="Team1" type="YSort" parent="."]
+
+[node name="Pawn" parent="Team1" instance=ExtResource( 6 )]
 
 [node name="Team2" type="YSort" parent="."]
 
 [node name="PathDisplay" parent="." instance=ExtResource( 4 )]
 
 [node name="Cursor" parent="." instance=ExtResource( 1 )]
-position = Vector2( 16, 16 )
+position = Vector2( 96, 96 )

@@ -11,6 +11,7 @@ signal accept_pressed(cell)
 signal cancel_pressed(cell)
 
 func _ready() -> void:
+	_camera.reset_smoothing()
 	_timer.wait_time = ui_cooldown
 	set_cell(Grid.get_cell_coordinates(position))
 	position = Grid.get_map_position(cell)
@@ -20,6 +21,7 @@ func bound_camera() -> void:
 	_camera.limit_top = 0
 	_camera.limit_right = Grid.get_map_bounds().x * Grid.cell_size.x
 	_camera.limit_bottom = Grid.get_map_bounds().y * Grid.cell_size.y
+	_camera.reset_smoothing()
 
 func set_cell(input: Vector2) -> void:
 	var new_cell: Vector2 = Grid.clamp_to_board(input)

@@ -13,8 +13,9 @@ func _ready() -> void:
 	if $Cursor.connect("cancel_pressed", self, "_on_cancel_pressed") != OK:
 		push_error("connect fail")
 
-func _on_cursor_moved(cell) -> void:
-	print("cursor moved to ", cell)
+func _on_cursor_moved(_cell) -> void:
+	pass
+	#print("cursor moved to ", cell)
 
 func _on_accept_pressed(cell) -> void:
 	print("pressed accept at ", cell)

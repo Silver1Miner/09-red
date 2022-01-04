@@ -6,7 +6,8 @@ export var cell_size := Vector2(32, 32)
 var _half_cell_size = cell_size/2
 
 func get_map_position(cell_coordinates: Vector2) -> Vector2:
-	return cell_coordinates * cell_size + _half_cell_size
+	return cell_coordinates * cell_size
+	# return cell_coordinates * cell_size + _half_cell_size
 
 func get_cell_coordinates(map_position: Vector2) -> Vector2:
 	return (map_position / cell_size).floor()

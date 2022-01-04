@@ -5,8 +5,9 @@ signal walk_finished
 
 export var Grid: Resource = preload("res://src/World/Grid.tres")
 export var move_range := 6
+export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
 export var move_speed := 300.0
-var cell := Vector2.ZERO setget set_cell
+export var cell := Vector2.ZERO setget set_cell
 var is_selected := false setget set_is_selected
 var _is_walking := false setget _set_is_walking
 onready var _sprite: Sprite = $PathFollow2D/Sprite
@@ -39,7 +40,6 @@ func _process(delta: float) -> void:
 		position = Grid.get_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
-
 
 func walk_along(path: PoolVector2Array) -> void:
 	if path.empty():

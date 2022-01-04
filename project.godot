@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/World/Grid.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "PathFinder",
 "language": "GDScript",
 "path": "res://src/World/PathFinder.gd"
@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Pawn",
 "language": "GDScript",
 "path": "res://src/World/Pawns/Pawn.gd"
+}, {
+"base": "Resource",
+"class": "TerrainData",
+"language": "GDScript",
+"path": "res://src/Data/TerrainData.gd"
 } ]
 _global_script_class_icons={
 "Grid": "",
 "PathFinder": "",
-"Pawn": ""
+"Pawn": "",
+"TerrainData": ""
 }
 
 [application]
