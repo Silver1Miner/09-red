@@ -48,7 +48,7 @@ func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int) -> Ar
 	var limits = get_flood_fill(cell, move_range)
 	var cell_mappings = cell_map(limits, moving_type)
 	for end in limits:
-		if _astar.has_point(cell_mappings[end]) and len(calculate_point_path(cell, end)) <= move_range + 1:
+		if _astar.has_point(cell_mappings[end]) and len(calculate_point_path(cell, end)) <= move_range + 1 and len(calculate_point_path(cell, end)) != 0:
 			if not endpoints.has(end):
 				endpoints.append(end)
 	return endpoints

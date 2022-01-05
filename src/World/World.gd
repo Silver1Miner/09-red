@@ -20,7 +20,7 @@ func _ready() -> void:
 	if $Cursor.connect("cancel_pressed", self, "_on_cancel_pressed") != OK:
 		push_error("connect fail")
 	recount_units()
-	move_range_display.draw(pathfinder.get_valid_endpoints(Vector2(8,8), 4, 1))
+	move_range_display.draw(pathfinder.get_valid_endpoints(Vector2(8,8), 7, 1))
 
 func _on_cursor_moved(_cell) -> void:
 	pass
