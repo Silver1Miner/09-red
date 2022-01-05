@@ -3,20 +3,20 @@ extends Resource
 
 enum MOVE_TYPE {FOOT, TREAD, TIRE}
 
-var terrain := {
+var data := {
 	-1: {
 		"name": "empty", "defense": 0,
 		"move_cost": [-1, -1, -1], # Foot, Tread, Tire
 	},
-	0: {
+	2: {
 		"name": "plain", "defense": 1,
 		"move_cost": [1, 1, 1],
 	},
-	1: {
+	0: {
 		"name": "forest", "defense": 3,
-		"move_cost": [2, 2, 3],
+		"move_cost": [1, 2, 3],
 	},
-	2: {
+	1: {
 		"name": "hill", "defense": 4,
 		"move_cost": [2, -1, -1],
 	},

@@ -3,7 +3,7 @@ class_name Pawn
 
 signal walk_finished
 
-export var Grid: Resource = preload("res://src/World/Grid.tres")
+export var grid: Resource = preload("res://src/World/Grid.tres")
 export var move_range := 6
 export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
 export var move_speed := 300.0
@@ -16,11 +16,11 @@ onready var _path_follow: PathFollow2D = $PathFollow2D
 
 func _ready() -> void:
 	set_process(false)
-	self.cell = Grid.get_cell_coordinates(position)
-	position = Grid.get_map_position(cell)
+	self.cell = grid.get_cell_coordinates(position)
+	position = grid.get_map_position(cell)
 	if not Engine.editor_hint:
 		curve = Curve2D.new()
-	test()
+	#test()
 
 func test() -> void:
 	var points := [
@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	if _path_follow.unit_offset >= 1.0:
 		self._is_walking = false
 		_path_follow.offset = 0.0
-		position = Grid.get_map_position(cell)
+		position = grid.get_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
 
@@ -46,12 +46,12 @@ func walk_along(path: PoolVector2Array) -> void:
 		return
 	curve.add_point(Vector2.ZERO)
 	for point in path:
-		curve.add_point(Grid.get_map_position(point) - position)
+		curve.add_point(grid.get_map_position(point) - position)
 	cell = path[-1]
 	self._is_walking = true
 
 func set_cell(value: Vector2) -> void:
-	cell = Grid.clamp_to_board(value)
+	cell = grid.clamp_to_board(value)
 
 func set_is_selected(value: bool) -> void:
 	is_selected = value

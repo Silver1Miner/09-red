@@ -1,6 +1,6 @@
 extends Node2D
 
-export var Grid: Resource = preload("res://src/World/Grid.tres")
+export var grid: Resource = preload("res://src/World/Grid.tres")
 export var ui_cooldown := 0.1
 onready var _timer: Timer = $Timer
 onready var _camera: Camera2D = $Camera2D
@@ -13,29 +13,29 @@ signal cancel_pressed(cell)
 func _ready() -> void:
 	_camera.reset_smoothing()
 	_timer.wait_time = ui_cooldown
-	set_cell(Grid.get_cell_coordinates(position))
-	position = Grid.get_map_position(cell)
+	set_cell(grid.get_cell_coordinates(position))
+	position = grid.get_map_position(cell)
 
 func bound_camera() -> void:
 	_camera.limit_left = 0
 	_camera.limit_top = 0
-	_camera.limit_right = Grid.get_map_bounds().x * Grid.cell_size.x
-	_camera.limit_bottom = Grid.get_map_bounds().y * Grid.cell_size.y
+	_camera.limit_right = grid.get_map_bounds().x * grid.cell_size.x
+	_camera.limit_bottom = grid.get_map_bounds().y * grid.cell_size.y
 	_camera.reset_smoothing()
 
 func set_cell(input: Vector2) -> void:
-	var new_cell: Vector2 = Grid.clamp_to_board(input)
+	var new_cell: Vector2 = grid.clamp_to_board(input)
 	if new_cell.is_equal_approx(cell):
 		return
 	cell = new_cell
-	position = Grid.get_map_position(cell)
+	position = grid.get_map_position(cell)
 
 var past_cell := cell
 func _unhandled_input(event) -> void:
 	if event is InputEventMouseMotion:
-		if Grid.is_within_bounds(Grid.get_cell_coordinates(get_global_mouse_position())):
+		if grid.is_within_bounds(grid.get_cell_coordinates(get_global_mouse_position())):
 			visible = true
-			self.cell = Grid.get_cell_coordinates(get_global_mouse_position())
+			self.cell = grid.get_cell_coordinates(get_global_mouse_position())
 			if cell != past_cell:
 				emit_signal("cursor_moved", cell)
 			past_cell = cell
