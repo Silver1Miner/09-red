@@ -4,7 +4,7 @@ class_name Pawn
 signal walk_finished
 
 export var grid: Resource = preload("res://src/World/Grid.tres")
-export var move_range := 6
+export var move_range := 4
 export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
 export var move_speed := 300.0
 export var cell := Vector2.ZERO setget set_cell

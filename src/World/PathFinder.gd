@@ -7,11 +7,6 @@ export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 var _astar := AStar2D.new()
 onready var terrain = $"../Terrain"
-onready var team1 = $"../Team1"
-onready var team2 = $"../Team2"
-
-func _ready() -> void:
-	pass
 
 func cell_map(walkable_cells, moving_type) -> Dictionary:
 	var cell_mappings := {}
@@ -48,7 +43,7 @@ func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int) -> Ar
 	var limits = get_flood_fill(cell, move_range)
 	var cell_mappings = cell_map(limits, moving_type)
 	for end in limits:
-		if _astar.has_point(cell_mappings[end]) and len(calculate_point_path(cell, end)) <= move_range + 1 and len(calculate_point_path(cell, end)) != 0:
+		if _astar.has_point(cell_mappings[end]) and get_path_move_cost(calculate_point_path(cell, end),moving_type) <= move_range and len(calculate_point_path(cell, end)) != 0:
 			if not endpoints.has(end):
 				endpoints.append(end)
 	return endpoints
@@ -82,3 +77,9 @@ func calculate_point_path(start: Vector2, end: Vector2) -> PoolVector2Array:
 		return _astar.get_point_path(start_index, end_index)
 	else:
 		return PoolVector2Array()
+
+func get_path_move_cost(path: PoolVector2Array, moving_type: int) -> int:
+	var cost = 0
+	for point in path:
+		cost += get_terrain_move_cost(point, moving_type)
+	return cost
