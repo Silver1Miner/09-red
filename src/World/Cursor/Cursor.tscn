@@ -19,6 +19,7 @@ script = ExtResource( 3 )
 position = Vector2( 16, 16 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -32,5 +33,34 @@ limit_bottom = 400
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 2.0
-editor_draw_limits = true
-editor_draw_drag_margin = true
+editor_draw_screen = false
+
+[node name="UnitMenu" type="VBoxContainer" parent="."]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 72.0
+margin_bottom = 72.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Button" parent="UnitMenu"]
+margin_right = 52.0
+margin_bottom = 20.0
+text = "Attack"
+
+[node name="Item" type="Button" parent="UnitMenu"]
+margin_top = 24.0
+margin_right = 52.0
+margin_bottom = 44.0
+text = "Item"
+
+[node name="Wait" type="Button" parent="UnitMenu"]
+margin_top = 48.0
+margin_right = 52.0
+margin_bottom = 68.0
+text = "Wait"
+
+[connection signal="pressed" from="UnitMenu/Attack" to="." method="_on_Attack_pressed"]
+[connection signal="pressed" from="UnitMenu/Item" to="." method="_on_Item_pressed"]
+[connection signal="pressed" from="UnitMenu/Wait" to="." method="_on_Wait_pressed"]

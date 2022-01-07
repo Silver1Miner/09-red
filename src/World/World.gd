@@ -1,6 +1,6 @@
 extends Node
 
-export var map_size = Vector2(25, 18)
+export var map_size = Vector2(21, 14)
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 
