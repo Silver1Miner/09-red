@@ -54,13 +54,23 @@ func walk_along(path: PoolVector2Array) -> void:
 	cell = path[-1]
 	self._is_walking = true
 
-func cancel_walk() -> void:
+func undo_move() -> void:
 	set_cell(prev_cell)
+	position = grid.get_map_position(cell)
 
 func set_cell(value: Vector2) -> void:
 	cell = grid.clamp_to_board(value)
 
+func set_pawn_state(state: int) -> void:
+	pawn_state = state
+	if pawn_state == STATE.WAIT:
+		$PathFollow2D/Sprite.self_modulate = Color(100/255.0,100/255.0,100/255.0)
+	else:
+		$PathFollow2D/Sprite.self_modulate = Color(1,1,1)
+
 func set_is_selected(value: bool) -> void:
+	if pawn_state == STATE.WAIT:
+		return
 	is_selected = value
 	if is_selected:
 		pawn_state = STATE.AWAITING_ORDER

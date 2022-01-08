@@ -12,9 +12,9 @@ export var cell := Vector2.ZERO setget set_cell
 signal cursor_moved(cell)
 signal accept_pressed(cell)
 signal cancel_pressed(cell)
-signal attack_command(cell)
-signal item_command(cell)
-signal wait_command(cell)
+signal attack_command()
+signal item_command()
+signal wait_command()
 
 func _ready() -> void:
 	_camera.reset_smoothing()
@@ -40,6 +40,8 @@ func set_cell(input: Vector2) -> void:
 func set_cursor_state(state: int) -> void:
 	cursor_state = state
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
+	if $UnitMenu.visible:
+		$UnitMenu/Attack.grab_focus()
 
 var past_cell := cell
 func _unhandled_input(event) -> void:
@@ -53,7 +55,8 @@ func _unhandled_input(event) -> void:
 		else:
 			visible = false
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("click_left"):
-		emit_signal("accept_pressed", cell)
+		if cursor_state == STATE.MOVING:
+			emit_signal("accept_pressed", cell)
 		get_tree().set_input_as_handled()
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right"):
 		emit_signal("cancel_pressed", cell)
@@ -77,13 +80,17 @@ func _unhandled_input(event) -> void:
 		emit_signal("cursor_moved", cell)
 
 func _on_Attack_pressed() -> void:
-	emit_signal("attack_command", cell)
+	emit_signal("attack_command")
 	$UnitMenu.visible = false
 
 func _on_Item_pressed() -> void:
-	emit_signal("item_command", cell)
+	emit_signal("item_command")
 	$UnitMenu.visible = false
 
 func _on_Wait_pressed() -> void:
-	emit_signal("wait_command", cell)
+	emit_signal("wait_command")
+	$UnitMenu.visible = false
+
+func _on_Cancel_pressed() -> void:
+	emit_signal("cancel_pressed", cell)
 	$UnitMenu.visible = false
