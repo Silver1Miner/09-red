@@ -40,10 +40,15 @@ _global_script_class_icons={
 
 config/name="Red Nine"
 config/description="Tactical War"
+run/main_scene="res://src/Menu/MainMenu.tscn"
 boot_splash/image="res://icon.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0.0392157, 0.0392157, 0.0392157, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerData="*res://src/Player/PlayerData.tscn"
 
 [display]
 

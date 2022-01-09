@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/Cursor/crosshair026.png" type="Texture" id=1]
 [ext_resource path="res://assets/Cursor/crosshair025.png" type="Texture" id=2]
 [ext_resource path="res://src/World/Cursor/Cursor.gd" type="Script" id=3]
+[ext_resource path="res://assets/Theme/UI.tres" type="Theme" id=4]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -38,68 +39,70 @@ editor_draw_screen = false
 margin_left = 32.0
 margin_right = 86.0
 margin_bottom = 92.0
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Attack" type="Button" parent="UnitMenu"]
 margin_right = 54.0
-margin_bottom = 20.0
+margin_bottom = 21.3685
 text = "Attack"
 
 [node name="Item" type="Button" parent="UnitMenu"]
-margin_top = 24.0
+margin_top = 25.0
 margin_right = 54.0
-margin_bottom = 44.0
+margin_bottom = 46.3685
 text = "Item"
 
 [node name="Wait" type="Button" parent="UnitMenu"]
-margin_top = 48.0
+margin_top = 50.0
 margin_right = 54.0
-margin_bottom = 68.0
+margin_bottom = 71.3685
 text = "Wait"
 
 [node name="Cancel" type="Button" parent="UnitMenu"]
-margin_top = 72.0
+margin_top = 75.0
 margin_right = 54.0
-margin_bottom = 92.0
+margin_bottom = 96.3685
 text = "Cancel"
 
 [node name="MapMenu" type="VBoxContainer" parent="."]
 margin_left = 32.0
 margin_right = 99.0
 margin_bottom = 116.0
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Cancel" type="Button" parent="MapMenu"]
 margin_right = 67.0
-margin_bottom = 20.0
+margin_bottom = 21.3685
 text = "Cancel"
 
 [node name="Status" type="Button" parent="MapMenu"]
-margin_top = 24.0
+margin_top = 25.0
 margin_right = 67.0
-margin_bottom = 44.0
+margin_bottom = 46.3685
 text = "Status"
 
 [node name="Save" type="Button" parent="MapMenu"]
-margin_top = 48.0
+margin_top = 50.0
 margin_right = 67.0
-margin_bottom = 68.0
+margin_bottom = 71.3685
 text = "Save"
 
 [node name="Options" type="Button" parent="MapMenu"]
-margin_top = 72.0
+margin_top = 75.0
 margin_right = 67.0
-margin_bottom = 92.0
+margin_bottom = 96.3685
 text = "Options"
 
 [node name="EndTurn" type="Button" parent="MapMenu"]
-margin_top = 96.0
+margin_top = 100.0
 margin_right = 67.0
-margin_bottom = 116.0
+margin_bottom = 121.369
 text = "End Turn"
 
 [connection signal="pressed" from="UnitMenu/Attack" to="." method="_on_Attack_pressed"]
