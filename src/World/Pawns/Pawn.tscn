@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/World/Pawns/Pawn.gd" type="Script" id=1]
-[ext_resource path="res://assets/Pawns/infantry-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/Pawns/infantry-red-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://assets/UI/progress-bar-under.png" type="Texture" id=3]
 [ext_resource path="res://assets/UI/progress-bar-fill.png" type="Texture" id=4]
 [ext_resource path="res://assets/UI/progress-bar-over.png" type="Texture" id=5]
@@ -66,7 +66,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 0.282353, 0.282353, 0.282353, 1 ) ]
+"values": [ Color( 0.627451, 0.627451, 0.627451, 1 ) ]
 }
 
 [node name="Pawn" type="Path2D"]

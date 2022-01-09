@@ -31,6 +31,9 @@ margin_right = 70.0
 margin_bottom = 95.0
 texture = ExtResource( 2 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Options" type="VBoxContainer" parent="."]
 margin_left = 50.0
