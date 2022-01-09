@@ -109,6 +109,7 @@ func _confirm_move() -> void:
 	if not team1_units.erase(_active_unit.prev_cell):
 		print("unit not found")
 	team1_units[_active_unit.cell] = _active_unit
+	_active_unit.prev_cell = _active_unit.cell
 	_deselect_active_unit()
 	cursor.set_cursor_state(cursor.STATE.MOVING)
 	_active_unit.set_pawn_state(_active_unit.STATE.WAIT)
