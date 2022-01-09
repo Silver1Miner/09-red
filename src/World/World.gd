@@ -30,6 +30,8 @@ func _ready() -> void:
 		push_error("connect fail")
 	if cursor.connect("wait_command", self, "_on_wait_command") != OK:
 		push_error("connect fail")
+	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
+		push_error("connect fail")
 	recount_units()
 	move_range_display.draw(pathfinder.get_valid_endpoints(Vector2(8,8), 7, 1))
 
@@ -44,14 +46,18 @@ func _on_cursor_moved(cell) -> void:
 		path_display.draw_path(path)
 
 func _on_accept_pressed(cell) -> void:
+	if not is_occupied(cell) and not _active_unit:
+		cursor.set_cursor_state(cursor.STATE.MENU)
 	if not _active_unit:
 		_select_unit(cell)
 	elif _active_unit.is_selected:
 		_move_active_unit(cell)
 
 func _on_cancel_pressed(cell) -> void:
-	if cursor.cursor_state == cursor.STATE.COMMAND and _active_unit:
+	if _active_unit:
 		_cancel_move()
+	elif cursor.cursor_state == cursor.STATE.MENU:
+		cursor.set_cursor_state(cursor.STATE.MOVING)
 	print(TerrainData.data[terrain.get_cellv(cell)])
 
 func is_occupied(cell: Vector2) -> bool:
@@ -124,3 +130,9 @@ func _on_item_command() -> void:
 
 func _on_wait_command() -> void:
 	_confirm_move()
+
+func _on_end_turn() -> void:
+	print("end turn")
+	for unit in $Team1.get_children():
+		unit.set_pawn_state(unit.STATE.READY)
+	cursor.set_cursor_state(cursor.STATE.MOVING)

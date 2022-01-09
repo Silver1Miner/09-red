@@ -1,6 +1,6 @@
 extends Node2D
 
-enum STATE {MOVING, COMMAND}
+enum STATE {MOVING, COMMAND, MENU}
 var cursor_state = STATE.MOVING
 
 export var grid: Resource = preload("res://src/World/Grid.tres")
@@ -15,6 +15,7 @@ signal cancel_pressed(cell)
 signal attack_command()
 signal item_command()
 signal wait_command()
+signal end_turn()
 
 func _ready() -> void:
 	_camera.reset_smoothing()
@@ -22,6 +23,7 @@ func _ready() -> void:
 	set_cell(grid.get_cell_coordinates(position))
 	position = grid.get_map_position(cell)
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
+	$MapMenu.visible = (cursor_state == STATE.MENU)
 
 func bound_camera() -> void:
 	_camera.limit_left = 0
@@ -40,8 +42,11 @@ func set_cell(input: Vector2) -> void:
 func set_cursor_state(state: int) -> void:
 	cursor_state = state
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
+	$MapMenu.visible = (cursor_state == STATE.MENU)
 	if $UnitMenu.visible:
 		$UnitMenu/Attack.grab_focus()
+	elif $MapMenu.visible:
+		$MapMenu/Cancel.grab_focus()
 
 var past_cell := cell
 func _unhandled_input(event) -> void:
@@ -81,16 +86,15 @@ func _unhandled_input(event) -> void:
 
 func _on_Attack_pressed() -> void:
 	emit_signal("attack_command")
-	$UnitMenu.visible = false
 
 func _on_Item_pressed() -> void:
 	emit_signal("item_command")
-	$UnitMenu.visible = false
 
 func _on_Wait_pressed() -> void:
 	emit_signal("wait_command")
-	$UnitMenu.visible = false
 
 func _on_Cancel_pressed() -> void:
 	emit_signal("cancel_pressed", cell)
-	$UnitMenu.visible = false
+
+func _on_EndTurn_pressed() -> void:
+	emit_signal("end_turn")

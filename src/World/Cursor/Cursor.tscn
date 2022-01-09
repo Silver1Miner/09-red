@@ -36,9 +36,8 @@ editor_draw_screen = false
 
 [node name="UnitMenu" type="VBoxContainer" parent="."]
 margin_left = 32.0
-margin_top = 32.0
-margin_right = 72.0
-margin_bottom = 72.0
+margin_right = 86.0
+margin_bottom = 92.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,7 +65,46 @@ margin_right = 54.0
 margin_bottom = 92.0
 text = "Cancel"
 
+[node name="MapMenu" type="VBoxContainer" parent="."]
+margin_left = 32.0
+margin_right = 99.0
+margin_bottom = 116.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="MapMenu"]
+margin_right = 67.0
+margin_bottom = 20.0
+text = "Cancel"
+
+[node name="Status" type="Button" parent="MapMenu"]
+margin_top = 24.0
+margin_right = 67.0
+margin_bottom = 44.0
+text = "Status"
+
+[node name="Save" type="Button" parent="MapMenu"]
+margin_top = 48.0
+margin_right = 67.0
+margin_bottom = 68.0
+text = "Save"
+
+[node name="Options" type="Button" parent="MapMenu"]
+margin_top = 72.0
+margin_right = 67.0
+margin_bottom = 92.0
+text = "Options"
+
+[node name="EndTurn" type="Button" parent="MapMenu"]
+margin_top = 96.0
+margin_right = 67.0
+margin_bottom = 116.0
+text = "End Turn"
+
 [connection signal="pressed" from="UnitMenu/Attack" to="." method="_on_Attack_pressed"]
 [connection signal="pressed" from="UnitMenu/Item" to="." method="_on_Item_pressed"]
 [connection signal="pressed" from="UnitMenu/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="UnitMenu/Cancel" to="." method="_on_Cancel_pressed"]
+[connection signal="pressed" from="MapMenu/Cancel" to="." method="_on_Cancel_pressed"]
+[connection signal="pressed" from="MapMenu/EndTurn" to="." method="_on_EndTurn_pressed"]

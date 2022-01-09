@@ -63,21 +63,22 @@ func set_cell(value: Vector2) -> void:
 
 func set_pawn_state(state: int) -> void:
 	pawn_state = state
-	if pawn_state == STATE.WAIT:
-		$PathFollow2D/Sprite.self_modulate = Color(100/255.0,100/255.0,100/255.0)
-	else:
-		$PathFollow2D/Sprite.self_modulate = Color(1,1,1)
+	match pawn_state:
+		STATE.WAIT:
+			_anim_player.play("waiting")
+		STATE.AWAITING_ORDER:
+			_anim_player.play("selected")
+		STATE.READY:
+			_anim_player.play("idle")
 
 func set_is_selected(value: bool) -> void:
 	if pawn_state == STATE.WAIT:
 		return
 	is_selected = value
 	if is_selected:
-		pawn_state = STATE.AWAITING_ORDER
-		print("selected")
+		set_pawn_state(STATE.AWAITING_ORDER)
 	else:
-		pawn_state = STATE.READY
-		print("idle")
+		set_pawn_state(STATE.READY)
 
 func _set_is_walking(value: bool) -> void:
 	_is_walking = value
