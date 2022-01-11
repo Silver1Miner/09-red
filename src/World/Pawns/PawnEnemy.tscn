@@ -4,6 +4,8 @@
 [ext_resource path="res://src/World/Pawns/Pawn.tscn" type="PackedScene" id=2]
 
 [node name="PawnEnemy" instance=ExtResource( 2 )]
+team = 1
+attack_range = Vector2( 1, 1 )
 
 [node name="Sprite" parent="PathFollow2D" index="1"]
 texture = ExtResource( 1 )

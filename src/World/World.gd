@@ -6,7 +6,8 @@ export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 
 onready var terrain = $Terrain
 onready var pathfinder = $PathFinder
-onready var move_range_display = $MoveRangeDisplay
+onready var battle_manager = $BattleManager
+onready var range_display = $RangeDisplay
 onready var path_display = $PathDisplay
 onready var cursor = $Cursor
 var team1_units := {}
@@ -33,7 +34,7 @@ func _ready() -> void:
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
 	recount_units()
-	move_range_display.draw(pathfinder.get_valid_endpoints(Vector2(8,8), 7, 1))
+	range_display.draw_move(pathfinder.get_valid_endpoints(Vector2(8,8), 7, 1))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _active_unit and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right")):
@@ -58,7 +59,14 @@ func _on_cancel_pressed(cell) -> void:
 		_cancel_move()
 	elif cursor.cursor_state == cursor.STATE.MENU:
 		cursor.set_cursor_state(cursor.STATE.MOVING)
-	print(TerrainData.data[terrain.get_cellv(cell)])
+	else:
+		if team1_units.has(cell):
+			range_display.draw_attack(battle_manager.get_attackable_cells(cell, team1_units[cell].attack_range))
+		elif team2_units.has(cell):
+			range_display.draw_attack(battle_manager.get_attackable_cells(cell, team2_units[cell].attack_range))
+		else:
+			range_display.clear()
+		print(TerrainData.data[terrain.get_cellv(cell)])
 
 func is_occupied(cell: Vector2) -> bool:
 	return true if team1_units.has(cell) or team2_units.has(cell) else false
@@ -86,11 +94,11 @@ func _select_unit(cell: Vector2) -> void:
 	_active_unit = team1_units[cell]
 	_active_unit.is_selected = true
 	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type)
-	move_range_display.draw(_walkable_cells)
+	range_display.draw_move(_walkable_cells)
 
 func _deselect_active_unit() -> void:
 	_active_unit.is_selected = false
-	move_range_display.clear()
+	range_display.clear()
 	path_display.clear()
 
 func _clear_active_unit() -> void:

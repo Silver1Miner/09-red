@@ -44,7 +44,7 @@ func set_cursor_state(state: int) -> void:
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
 	$MapMenu.visible = (cursor_state == STATE.MENU)
 	if $UnitMenu.visible:
-		$UnitMenu/Attack.grab_focus()
+		$UnitMenu/Cancel.grab_focus()
 	elif $MapMenu.visible:
 		$MapMenu/Cancel.grab_focus()
 

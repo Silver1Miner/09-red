@@ -19,7 +19,7 @@ var test_dialogue = {
 func _ready() -> void:
 	timer.wait_time = 0.05
 	timer.autostart = true
-	initialize(test_dialogue)
+	#initialize(test_dialogue)
 
 func initialize(scene) -> void:
 	visible = true

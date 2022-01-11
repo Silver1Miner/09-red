@@ -47,28 +47,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Attack" type="Button" parent="UnitMenu"]
+[node name="Cancel" type="Button" parent="UnitMenu"]
 margin_right = 54.0
 margin_bottom = 21.3685
-text = "Attack"
+text = "Cancel"
 
-[node name="Item" type="Button" parent="UnitMenu"]
+[node name="Attack" type="Button" parent="UnitMenu"]
 margin_top = 25.0
 margin_right = 54.0
 margin_bottom = 46.3685
-text = "Item"
+text = "Attack"
 
-[node name="Wait" type="Button" parent="UnitMenu"]
+[node name="Item" type="Button" parent="UnitMenu"]
 margin_top = 50.0
 margin_right = 54.0
 margin_bottom = 71.3685
-text = "Wait"
+text = "Item"
 
-[node name="Cancel" type="Button" parent="UnitMenu"]
+[node name="Wait" type="Button" parent="UnitMenu"]
 margin_top = 75.0
 margin_right = 54.0
 margin_bottom = 96.3685
-text = "Cancel"
+text = "Wait"
 
 [node name="MapMenu" type="VBoxContainer" parent="."]
 margin_left = 32.0
@@ -108,9 +108,9 @@ margin_right = 67.0
 margin_bottom = 121.369
 text = "End Turn"
 
+[connection signal="pressed" from="UnitMenu/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="UnitMenu/Attack" to="." method="_on_Attack_pressed"]
 [connection signal="pressed" from="UnitMenu/Item" to="." method="_on_Item_pressed"]
 [connection signal="pressed" from="UnitMenu/Wait" to="." method="_on_Wait_pressed"]
-[connection signal="pressed" from="UnitMenu/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="MapMenu/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="MapMenu/EndTurn" to="." method="_on_EndTurn_pressed"]

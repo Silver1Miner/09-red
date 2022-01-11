@@ -3,8 +3,9 @@ class_name Pawn
 
 signal walk_finished
 enum STATE {READY, AWAITING_ORDER, WAIT}
+enum TEAM {RED, BLU}
 var pawn_state = STATE.READY
-
+export var team := TEAM.RED
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var move_range := 4
 export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
@@ -17,6 +18,8 @@ onready var _sprite: Sprite = $PathFollow2D/Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 onready var _path_follow: PathFollow2D = $PathFollow2D
 
+export var attack_range := Vector2(2,3)
+
 func _ready() -> void:
 	set_process(false)
 	self.cell = grid.get_cell_coordinates(position)
@@ -24,16 +27,6 @@ func _ready() -> void:
 	position = grid.get_map_position(cell)
 	if not Engine.editor_hint:
 		curve = Curve2D.new()
-	#test()
-
-func test() -> void:
-	var points := [
-		Vector2(2, 3),
-		Vector2(2, 6),
-		Vector2(8, 7),
-		Vector2(8, 9),
-	]
-	walk_along(PoolVector2Array(points))
 
 func _process(delta: float) -> void:
 	_path_follow.offset += move_speed * delta
