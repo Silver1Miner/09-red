@@ -47,6 +47,9 @@ func _on_cursor_moved(cell) -> void:
 		path_display.draw_path(path)
 
 func _on_accept_pressed(cell) -> void:
+	if cursor.cursor_state == cursor.STATE.TARGET:
+		print("target at ", cell)
+		return
 	if not is_occupied(cell) and not _active_unit:
 		cursor.set_cursor_state(cursor.STATE.MENU)
 	if not _active_unit:
@@ -61,9 +64,9 @@ func _on_cancel_pressed(cell) -> void:
 		cursor.set_cursor_state(cursor.STATE.MOVING)
 	else:
 		if team1_units.has(cell):
-			range_display.draw_attack(battle_manager.get_attackable_cells(cell, team1_units[cell].attack_range))
+			range_display.draw_attack(battle_manager.get_attack_range_cells(cell, team1_units[cell].attack_range))
 		elif team2_units.has(cell):
-			range_display.draw_attack(battle_manager.get_attackable_cells(cell, team2_units[cell].attack_range))
+			range_display.draw_attack(battle_manager.get_attack_range_cells(cell, team2_units[cell].attack_range))
 		else:
 			range_display.clear()
 		print(TerrainData.data[terrain.get_cellv(cell)])
@@ -106,11 +109,16 @@ func _clear_active_unit() -> void:
 	_walkable_cells.clear()
 
 func _move_active_unit(end_cell: Vector2) -> void:
-	if is_occupied(end_cell) or not end_cell in _walkable_cells:
+	if end_cell == _active_unit.cell:
+		cursor.set_cursor_state(cursor.STATE.COMMAND)
+		range_display.draw_attack(battle_manager.get_attack_range_cells(end_cell, _active_unit.attack_range))
+		return
+	elif is_occupied(end_cell) or not end_cell in _walkable_cells:
 		return
 	cursor.set_cursor_state(cursor.STATE.COMMAND)
 	_active_unit.walk_along(pathfinder.calculate_point_path(_active_unit.cell, end_cell))
 	yield(_active_unit, "walk_finished")
+	range_display.draw_attack(battle_manager.get_attack_range_cells(end_cell, _active_unit.attack_range))
 	#_clear_active_unit()
 
 func _confirm_move() -> void:
@@ -131,7 +139,11 @@ func _cancel_move() -> void:
 
 func _on_attack_command() -> void:
 	print("attack command")
-	_confirm_move()
+	range_display.draw_attack(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
+	cursor.set_cursor_state(cursor.STATE.TARGET)
+	cursor.valid_targets = battle_manager.get_target_cells(1)
+	print(cursor.valid_targets)
+	#_confirm_move()
 
 func _on_item_command() -> void:
 	print("item command")

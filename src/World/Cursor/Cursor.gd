@@ -1,6 +1,6 @@
 extends Node2D
 
-enum STATE {MOVING, COMMAND, MENU}
+enum STATE {MOVING, COMMAND, MENU, TARGET}
 var cursor_state = STATE.MOVING
 
 export var grid: Resource = preload("res://src/World/Grid.tres")
@@ -16,6 +16,9 @@ signal attack_command()
 signal item_command()
 signal wait_command()
 signal end_turn()
+
+var valid_targets := []
+var current_target := 0
 
 func _ready() -> void:
 	_camera.reset_smoothing()
@@ -59,6 +62,11 @@ func _unhandled_input(event) -> void:
 			past_cell = cell
 		else:
 			visible = false
+	elif cursor_state == STATE.TARGET and event is InputEventMouseMotion:
+		var cell_coord = grid.get_cell_coordinates(get_global_mouse_position())
+		if grid.is_within_bounds(cell_coord) and cell_coord in valid_targets:
+			visible = true
+			self.cell = grid.get_cell_coordinates(get_global_mouse_position())
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("click_left"):
 		if cursor_state == STATE.MOVING:
 			emit_signal("accept_pressed", cell)
@@ -77,12 +85,24 @@ func _unhandled_input(event) -> void:
 	elif cursor_state == STATE.MOVING and event.is_action("ui_left"):
 		self.cell += Vector2.LEFT
 		emit_signal("cursor_moved", cell)
-	if cursor_state == STATE.MOVING and event.is_action("ui_up"):
-		self.cell += Vector2.UP
-		emit_signal("cursor_moved", cell)
-	elif cursor_state == STATE.MOVING and event.is_action("ui_down"):
-		self.cell += Vector2.DOWN
-		emit_signal("cursor_moved", cell)
+	if event.is_action("ui_up"):
+		if cursor_state == STATE.MOVING:
+			self.cell += Vector2.UP
+			emit_signal("cursor_moved", cell)
+		elif cursor_state == STATE.TARGET:
+			current_target += 1
+			if current_target >= len(valid_targets):
+				current_target = 0
+			self.cell = valid_targets[current_target]
+	elif event.is_action("ui_down"):
+		if cursor_state == STATE.MOVING:
+			self.cell += Vector2.DOWN
+			emit_signal("cursor_moved", cell)
+		elif cursor_state == STATE.TARGET:
+			current_target -= 1
+			if current_target < 0:
+				current_target = 0
+			self.cell = valid_targets[current_target]
 
 func _on_Attack_pressed() -> void:
 	emit_signal("attack_command")
