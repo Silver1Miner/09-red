@@ -5,10 +5,18 @@ signal walk_finished
 enum STATE {READY, AWAITING_ORDER, WAIT}
 enum TEAM {RED, BLU}
 var pawn_state = STATE.READY
-export var team := TEAM.RED
-export var grid: Resource = preload("res://src/World/Grid.tres")
+
+export var pawn_type := 0
+export var attack_range := Vector2(2,3)
+export var hp := 20 setget _set_HP
+export var max_hp := 20
+export var attack := 15
+export var defense := 8
 export var move_range := 4
 export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
+
+export var team := TEAM.RED
+export var grid: Resource = preload("res://src/World/Grid.tres")
 export var move_speed := 300.0
 export var cell := Vector2.ZERO setget set_cell
 var prev_cell := cell
@@ -17,10 +25,13 @@ var _is_walking := false setget _set_is_walking
 onready var _sprite: Sprite = $PathFollow2D/Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 onready var _path_follow: PathFollow2D = $PathFollow2D
+onready var _hp_bar: TextureProgress = $PathFollow2D/TextureProgress
 
-export var attack_range := Vector2(2,3)
+
 
 func _ready() -> void:
+	_hp_bar.max_value = max_hp
+	_hp_bar.value = hp
 	set_process(false)
 	self.cell = grid.get_cell_coordinates(position)
 	self.prev_cell = cell
@@ -28,6 +39,14 @@ func _ready() -> void:
 	if not Engine.editor_hint:
 		curve = Curve2D.new()
 
+func _set_HP(new_hp) -> void:
+	if hp != new_hp:
+		hp = int(clamp(new_hp, 0, 99))
+		_hp_bar.value = hp
+
+# ======
+# MOTION
+# ======
 func _process(delta: float) -> void:
 	_path_follow.offset += move_speed * delta
 	if _path_follow.unit_offset >= 1.0:

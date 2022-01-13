@@ -1,10 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/World/Pawns/Pawn.gd" type="Script" id=1]
-[ext_resource path="res://assets/Pawns/infantry-red-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://assets/UI/progress-bar-under.png" type="Texture" id=3]
 [ext_resource path="res://assets/UI/progress-bar-fill.png" type="Texture" id=4]
 [ext_resource path="res://assets/UI/progress-bar-over.png" type="Texture" id=5]
+
+[sub_resource type="StreamTexture" id=5]
+load_path = "res://.import/infantry-red-Sheet.png-7bc9ae601edff76a0164537eca521f71.stex"
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -91,7 +93,7 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="PathFollow2D"]
 position = Vector2( 16, 16 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 2 )
+texture = SubResource( 5 )
 hframes = 3
 vframes = 3
 

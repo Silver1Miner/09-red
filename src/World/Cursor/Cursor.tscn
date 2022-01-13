@@ -20,6 +20,7 @@ script = ExtResource( 3 )
 position = Vector2( 16, 16 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -38,6 +39,7 @@ smoothing_speed = 2.0
 editor_draw_screen = false
 
 [node name="UnitMenu" type="VBoxContainer" parent="."]
+visible = false
 margin_left = 32.0
 margin_right = 86.0
 margin_bottom = 92.0
@@ -58,18 +60,20 @@ margin_bottom = 46.3685
 text = "Attack"
 
 [node name="Item" type="Button" parent="UnitMenu"]
+visible = false
 margin_top = 50.0
 margin_right = 54.0
 margin_bottom = 71.3685
 text = "Item"
 
 [node name="Wait" type="Button" parent="UnitMenu"]
-margin_top = 75.0
+margin_top = 50.0
 margin_right = 54.0
-margin_bottom = 96.3685
+margin_bottom = 71.3685
 text = "Wait"
 
 [node name="MapMenu" type="VBoxContainer" parent="."]
+visible = false
 margin_left = 32.0
 margin_right = 99.0
 margin_bottom = 116.0
@@ -106,6 +110,19 @@ margin_top = 100.0
 margin_right = 67.0
 margin_bottom = 121.369
 text = "End Turn"
+
+[node name="DefenseIntel" type="VBoxContainer" parent="."]
+margin_left = 32.0
+margin_right = 72.0
+margin_bottom = 40.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="DefenseIntel"]
+margin_right = 40.0
+margin_bottom = 13.0
 
 [connection signal="pressed" from="UnitMenu/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="UnitMenu/Attack" to="." method="_on_Attack_pressed"]

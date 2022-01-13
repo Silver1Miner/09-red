@@ -27,6 +27,7 @@ func _ready() -> void:
 	position = grid.get_map_position(cell)
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
 	$MapMenu.visible = (cursor_state == STATE.MENU)
+	$DefenseIntel.visible = (cursor_state == STATE.TARGET)
 
 func bound_camera() -> void:
 	_camera.limit_left = 0
@@ -46,6 +47,7 @@ func set_cursor_state(state: int) -> void:
 	cursor_state = state
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
 	$MapMenu.visible = (cursor_state == STATE.MENU)
+	$DefenseIntel.visible = (cursor_state == STATE.TARGET)
 	if $UnitMenu.visible:
 		$UnitMenu/Cancel.grab_focus()
 	elif $MapMenu.visible:
@@ -67,8 +69,9 @@ func _unhandled_input(event) -> void:
 		if grid.is_within_bounds(cell_coord) and cell_coord in valid_targets:
 			visible = true
 			self.cell = grid.get_cell_coordinates(get_global_mouse_position())
+			emit_signal("cursor_moved", cell)
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("click_left"):
-		if cursor_state == STATE.MOVING:
+		if cursor_state == STATE.MOVING or cursor_state == STATE.TARGET:
 			emit_signal("accept_pressed", cell)
 		get_tree().set_input_as_handled()
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right"):
@@ -94,6 +97,7 @@ func _unhandled_input(event) -> void:
 			if current_target >= len(valid_targets):
 				current_target = 0
 			self.cell = valid_targets[current_target]
+			emit_signal("cursor_moved", cell)
 	elif event.is_action("ui_down"):
 		if cursor_state == STATE.MOVING:
 			self.cell += Vector2.DOWN
@@ -103,6 +107,11 @@ func _unhandled_input(event) -> void:
 			if current_target < 0:
 				current_target = 0
 			self.cell = valid_targets[current_target]
+			emit_signal("cursor_moved", cell)
+
+func update_defense_intel(target_hp, target_defense) -> void:
+	$DefenseIntel/Label.text = """HP: %s
+DEF: %s""" % [str(target_hp), str(target_defense)]
 
 func _on_Attack_pressed() -> void:
 	emit_signal("attack_command")

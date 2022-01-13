@@ -42,14 +42,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		_clear_active_unit()
 
 func _on_cursor_moved(cell) -> void:
-	if _active_unit and _active_unit.is_selected and cell in _walkable_cells:
+	if cursor.cursor_state == cursor.STATE.TARGET:
+		cursor.update_defense_intel(team2_units[cell].hp, team2_units[cell].defense)
+	elif _active_unit and _active_unit.is_selected and cell in _walkable_cells:
 		var path = pathfinder.calculate_point_path(_active_unit.cell, cell)
 		path_display.draw_path(path)
 
 func _on_accept_pressed(cell) -> void:
 	if cursor.cursor_state == cursor.STATE.TARGET:
-		print("target at ", cell)
-		return
+		calculate_battle(cell)
 	if not is_occupied(cell) and not _active_unit:
 		cursor.set_cursor_state(cursor.STATE.MENU)
 	if not _active_unit:
@@ -119,6 +120,8 @@ func _move_active_unit(end_cell: Vector2) -> void:
 	_active_unit.walk_along(pathfinder.calculate_point_path(_active_unit.cell, end_cell))
 	yield(_active_unit, "walk_finished")
 	range_display.draw_attack(battle_manager.get_attack_range_cells(end_cell, _active_unit.attack_range))
+	cursor.get_node("UnitMenu/Attack").visible = (len(battle_manager.get_target_cells(1)) > 0)
+		
 	#_clear_active_unit()
 
 func _confirm_move() -> void:
@@ -144,6 +147,11 @@ func _on_attack_command() -> void:
 	cursor.valid_targets = battle_manager.get_target_cells(1)
 	print(cursor.valid_targets)
 	#_confirm_move()
+
+func calculate_battle(target_cell: Vector2) -> void:
+	print("unit at ", _active_unit.cell, " attacked unit at ", target_cell)
+	# TODO: battle calculation
+	_confirm_move()
 
 func _on_item_command() -> void:
 	print("item command")
