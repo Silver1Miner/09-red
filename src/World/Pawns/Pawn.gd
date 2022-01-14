@@ -3,8 +3,10 @@ class_name Pawn
 
 signal walk_finished
 enum STATE {READY, AWAITING_ORDER, WAIT}
+enum STATUS {NORMAL, BURN}
 enum TEAM {RED, BLU}
 var pawn_state = STATE.READY
+var status_effect = STATUS.NORMAL
 
 export var pawn_type := 0
 export var attack_range := Vector2(2,3)
@@ -27,8 +29,6 @@ onready var _anim_player: AnimationPlayer = $AnimationPlayer
 onready var _path_follow: PathFollow2D = $PathFollow2D
 onready var _hp_bar: TextureProgress = $PathFollow2D/TextureProgress
 
-
-
 func _ready() -> void:
 	_hp_bar.max_value = max_hp
 	_hp_bar.value = hp
@@ -43,6 +43,9 @@ func _set_HP(new_hp) -> void:
 	if hp != new_hp:
 		hp = int(clamp(new_hp, 0, 99))
 		_hp_bar.value = hp
+
+func take_damage(damage) -> void:
+	_set_HP(hp - damage)
 
 # ======
 # MOTION

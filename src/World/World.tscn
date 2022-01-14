@@ -41,6 +41,12 @@ position = Vector2( 352, 160 )
 [node name="PawnEnemy2" parent="Team2" instance=ExtResource( 9 )]
 position = Vector2( 384, 96 )
 
+[node name="PawnEnemy3" parent="Team2" instance=ExtResource( 9 )]
+position = Vector2( 256, 128 )
+
+[node name="PawnEnemy4" parent="Team2" instance=ExtResource( 9 )]
+position = Vector2( 256, 64 )
+
 [node name="Cursor" parent="." instance=ExtResource( 1 )]
 position = Vector2( 320, 256 )
 
