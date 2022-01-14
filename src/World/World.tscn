@@ -5,7 +5,7 @@
 [ext_resource path="res://src/World/World.gd" type="Script" id=3]
 [ext_resource path="res://src/World/UI/PathDisplay.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/World/PathFinder.gd" type="Script" id=5]
-[ext_resource path="res://src/World/Pawns/Pawn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/World/Pawns/Ranger.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/World/UI/RangeDisplay.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/Text/Textbox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/World/Pawns/PawnEnemy.tscn" type="PackedScene" id=9]
@@ -29,9 +29,8 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 3, 65539, 3, 2, 0, 4, 2, 0, 5, 2,
 
 [node name="Team1" type="YSort" parent="."]
 
-[node name="Pawn" parent="Team1" instance=ExtResource( 6 )]
-position = Vector2( 320, 96 )
-move_range = 5
+[node name="Ranger" parent="Team1" instance=ExtResource( 6 )]
+position = Vector2( 352, 32 )
 
 [node name="Team2" type="YSort" parent="."]
 

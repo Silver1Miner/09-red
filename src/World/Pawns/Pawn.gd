@@ -19,6 +19,7 @@ export var move_type := 0 # 0 Foot, 1 Tread, 2 Tire
 
 export var team := TEAM.RED
 export var grid: Resource = preload("res://src/World/Grid.tres")
+export var PawnData: Resource = preload("res://src/Data/PawnData.tres")
 export var move_speed := 300.0
 export var cell := Vector2.ZERO setget set_cell
 var prev_cell := cell
@@ -30,6 +31,7 @@ onready var _path_follow: PathFollow2D = $PathFollow2D
 onready var _hp_bar: TextureProgress = $PathFollow2D/TextureProgress
 
 func _ready() -> void:
+	load_pawn_data()
 	_hp_bar.max_value = max_hp
 	_hp_bar.value = hp
 	set_process(false)
@@ -38,6 +40,14 @@ func _ready() -> void:
 	position = grid.get_map_position(cell)
 	if not Engine.editor_hint:
 		curve = Curve2D.new()
+
+func load_pawn_data() -> void:
+	max_hp = PawnData.data[pawn_type]["max_hp"]
+	hp = max_hp
+	move_range = PawnData.data[pawn_type]["move_range"]
+	attack_range = PawnData.data[pawn_type]["attack_range"]
+	attack = PawnData.data[pawn_type]["attack"]
+	move_type = PawnData.data[pawn_type]["move_type"]
 
 func _set_HP(new_hp) -> void:
 	if hp != new_hp:

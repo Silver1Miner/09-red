@@ -116,10 +116,12 @@ func _move_active_unit(end_cell: Vector2) -> void:
 		return
 	elif is_occupied(end_cell) or not end_cell in _walkable_cells:
 		return
-	cursor.set_cursor_state(cursor.STATE.COMMAND)
+	cursor.set_cursor_state(cursor.STATE.WAIT)
 	_active_unit.walk_along(pathfinder.calculate_point_path(_active_unit.cell, end_cell))
 	yield(_active_unit, "walk_finished")
 	range_display.draw_attack(battle_manager.get_attack_range_cells(end_cell, _active_unit.attack_range))
+	cursor.valid_targets = battle_manager.get_target_cells(1)
+	cursor.set_cursor_state(cursor.STATE.COMMAND)
 	cursor.get_node("UnitMenu/Attack").visible = (len(battle_manager.get_target_cells(1)) > 0)
 	#_clear_active_unit()
 
@@ -141,9 +143,9 @@ func _cancel_move() -> void:
 
 func _on_attack_command() -> void:
 	print("attack command")
-	range_display.draw_attack(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
+	#range_display.draw_attack(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
 	cursor.set_cursor_state(cursor.STATE.TARGET)
-	cursor.valid_targets = battle_manager.get_target_cells(1)
+	#cursor.valid_targets = battle_manager.get_target_cells(1)
 	print(cursor.valid_targets)
 	#_confirm_move()
 

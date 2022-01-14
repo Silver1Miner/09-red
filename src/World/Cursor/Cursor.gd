@@ -1,6 +1,6 @@
 extends Node2D
 
-enum STATE {MOVING, COMMAND, MENU, TARGET}
+enum STATE {MOVING, COMMAND, MENU, TARGET, WAIT}
 var cursor_state = STATE.MOVING
 
 export var grid: Resource = preload("res://src/World/Grid.tres")
@@ -52,6 +52,8 @@ func set_cursor_state(state: int) -> void:
 		$UnitMenu/Cancel.grab_focus()
 	elif $MapMenu.visible:
 		$MapMenu/Cancel.grab_focus()
+	elif $DefenseIntel.visible:
+		self.cell = valid_targets[current_target]
 
 var past_cell := cell
 func _unhandled_input(event) -> void:
