@@ -13,7 +13,7 @@ var data := {
 	"attack": 9,"move_type": 0,},
 	3: {"name": "Flamer", "max_hp": 18,
 	"move_range": 6, "attack_range": Vector2(1,2),
-	"attack": 8,"move_type": 0,},
+	"attack": 8,"move_type": 1,},
 	4: {"name": "Rockets", "max_hp": 18,
 	"move_range": 5, "attack_range": Vector2(2,4),
 	"attack": 10,"move_type": 2,},

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Pawns/spy-red-Sheet.png" type="Texture" id=1]
+[ext_resource path="res://src/World/Pawns/Pawn.tscn" type="PackedScene" id=2]
+
+[node name="Agent" instance=ExtResource( 2 )]
+pawn_type = 9
+
+[node name="Sprite" parent="PathFollow2D" index="1"]
+texture = ExtResource( 1 )

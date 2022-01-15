@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/World/Cursor/Cursor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Terrain/Terrain.tscn" type="PackedScene" id=2]
@@ -11,6 +11,14 @@
 [ext_resource path="res://src/World/Pawns/PawnEnemy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/World/BattleManager.gd" type="Script" id=10]
 [ext_resource path="res://src/World/Effects/ObjectRegistry.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/World/Pawns/Tank.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/World/Pawns/Antitank.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/World/Pawns/Flamer.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/World/Pawns/Agent.tscn" type="PackedScene" id=15]
+[ext_resource path="res://src/World/Pawns/Grenadier.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/World/Pawns/Sharpshooter.tscn" type="PackedScene" id=17]
+[ext_resource path="res://src/World/Pawns/Medic.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/World/Pawns/Sapper.tscn" type="PackedScene" id=19]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -32,6 +40,30 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 3, 65539, 3, 2, 0, 4, 2, 0, 5, 2,
 
 [node name="Ranger" parent="Team1" instance=ExtResource( 6 )]
 position = Vector2( 352, 32 )
+
+[node name="Agent" parent="Team1" instance=ExtResource( 15 )]
+position = Vector2( 160, 96 )
+
+[node name="Antitank" parent="Team1" instance=ExtResource( 13 )]
+position = Vector2( 320, 96 )
+
+[node name="Flamer" parent="Team1" instance=ExtResource( 14 )]
+position = Vector2( 448, 192 )
+
+[node name="Grenadier" parent="Team1" instance=ExtResource( 16 )]
+position = Vector2( 320, 224 )
+
+[node name="Medic" parent="Team1" instance=ExtResource( 18 )]
+position = Vector2( 416, 128 )
+
+[node name="Sapper" parent="Team1" instance=ExtResource( 19 )]
+position = Vector2( 416, 64 )
+
+[node name="Sharpshooter" parent="Team1" instance=ExtResource( 17 )]
+position = Vector2( 480, 32 )
+
+[node name="Tank" parent="Team1" instance=ExtResource( 12 )]
+position = Vector2( 288, 32 )
 
 [node name="Team2" type="YSort" parent="."]
 

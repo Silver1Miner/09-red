@@ -16,6 +16,8 @@ var team2_units := {}
 var _active_unit: Pawn
 var _walkable_cells := []
 
+var turn_count := 1
+
 func _ready() -> void:
 	grid.board_size = map_size
 	cursor.bound_camera()
@@ -193,6 +195,7 @@ func _on_wait_command() -> void:
 
 func _on_end_turn() -> void:
 	print("end turn")
+	turn_count += 1
 	for unit in $Team1.get_children():
 		unit.set_pawn_state(unit.STATE.READY)
 	cursor.set_cursor_state(cursor.STATE.MOVING)
