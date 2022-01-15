@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/World/Cursor/Cursor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Terrain/Terrain.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://src/Text/Textbox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/World/Pawns/PawnEnemy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/World/BattleManager.gd" type="Script" id=10]
+[ext_resource path="res://src/World/Effects/ObjectRegistry.tscn" type="PackedScene" id=11]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -45,6 +46,8 @@ position = Vector2( 256, 128 )
 
 [node name="PawnEnemy4" parent="Team2" instance=ExtResource( 9 )]
 position = Vector2( 256, 64 )
+
+[node name="ObjectRegistry" parent="." instance=ExtResource( 11 )]
 
 [node name="Cursor" parent="." instance=ExtResource( 1 )]
 position = Vector2( 320, 256 )

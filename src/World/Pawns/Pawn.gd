@@ -29,6 +29,7 @@ onready var _sprite: Sprite = $PathFollow2D/Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 onready var _path_follow: PathFollow2D = $PathFollow2D
 onready var _hp_bar: TextureProgress = $PathFollow2D/TextureProgress
+signal destroyed(cell)
 
 func _ready() -> void:
 	load_pawn_data()
@@ -53,9 +54,15 @@ func _set_HP(new_hp) -> void:
 	if hp != new_hp:
 		hp = int(clamp(new_hp, 0, 99))
 		_hp_bar.value = hp
+	if hp == 0:
+		destroyed()
 
 func take_damage(damage) -> void:
 	_set_HP(hp - damage)
+
+func destroyed() -> void:
+	emit_signal("destroyed", cell)
+	queue_free()
 
 # ======
 # MOTION

@@ -34,7 +34,6 @@ func _ready() -> void:
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
 	recount_units()
-	range_display.draw_move(pathfinder.get_valid_endpoints(Vector2(8,8), 7, 1))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _active_unit and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right")):
@@ -51,9 +50,9 @@ func _on_cursor_moved(cell) -> void:
 func _on_accept_pressed(cell) -> void:
 	if cursor.cursor_state == cursor.STATE.TARGET:
 		calculate_battle(cell)
-	if not is_occupied(cell) and not _active_unit:
+	elif not is_occupied(cell) and not _active_unit:
 		cursor.set_cursor_state(cursor.STATE.MENU)
-	if not _active_unit:
+	elif not _active_unit:
 		_select_unit(cell)
 	elif _active_unit.is_selected:
 		_move_active_unit(cell)
@@ -82,12 +81,32 @@ func recount_units() -> void:
 		var pawn := child as Pawn
 		if not pawn:
 			continue
+		if pawn.connect("destroyed", self, "_on_team1_pawn_destroyed") != OK:
+			push_error("connect fail")
 		team1_units[pawn.cell] = pawn
 	for child in $Team2.get_children():
 		var pawn := child as Pawn
 		if not pawn:
 			continue
+		if pawn.connect("destroyed", self, "_on_team2_pawn_destroyed") != OK:
+			push_error("connect fail")
 		team2_units[pawn.cell] = pawn
+
+func _on_team1_pawn_destroyed(cell) -> void:
+	if !team1_units.erase(cell):
+		push_error("cell not in team 1")
+	create_explosion(cell)
+
+func _on_team2_pawn_destroyed(cell) -> void:
+	if !team2_units.erase(cell):
+		push_error("cell not in team 2")
+	create_explosion(cell)
+
+func create_explosion(cell) -> void:
+	var explosion = preload("res://src/World/Effects/Explosion.tscn")
+	var explosion_instance = explosion.instance()
+	$ObjectRegistry.register_effect(explosion_instance)
+	explosion_instance.position = grid.get_map_position(cell) + Vector2(16,0)
 
 func _select_unit(cell: Vector2) -> void:
 	if not team1_units.has(cell):
@@ -151,10 +170,18 @@ func _on_attack_command() -> void:
 
 func calculate_battle(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " attacked unit at ", target_cell)
-	var damage = _active_unit.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"]
+	var damage = clamp(_active_unit.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	print(damage, " damage")
 	team2_units[target_cell].take_damage(damage)
-	# TODO: battle damage
+	_confirm_move()
+
+func calculate_heal(target_cell: Vector2) -> void:
+	print("unit at ", _active_unit.cell, " healing unit at ", target_cell)
+	team1_units[target_cell].take_damage(-10)
+	_confirm_move()
+
+func change_terrain(target_cell: Vector2) -> void:
+	print("unit at ", _active_unit.cell, " changing terrain at ", target_cell)
 	_confirm_move()
 
 func _on_item_command() -> void:
