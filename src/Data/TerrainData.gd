@@ -3,6 +3,9 @@ extends Resource
 
 enum MOVE_TYPE {FOOT, TREAD, TIRE}
 
+var buildable_cells = []
+var capturable_cells = []
+
 var data := {
 	-1: {
 		"name": "empty", "defense": 0,

@@ -48,7 +48,7 @@ position = Vector2( 160, 96 )
 position = Vector2( 320, 96 )
 
 [node name="Flamer" parent="Team1" instance=ExtResource( 14 )]
-position = Vector2( 448, 192 )
+position = Vector2( 480, 64 )
 
 [node name="Grenadier" parent="Team1" instance=ExtResource( 16 )]
 position = Vector2( 320, 224 )
@@ -60,7 +60,7 @@ position = Vector2( 416, 128 )
 position = Vector2( 416, 64 )
 
 [node name="Sharpshooter" parent="Team1" instance=ExtResource( 17 )]
-position = Vector2( 480, 32 )
+position = Vector2( 448, 32 )
 
 [node name="Tank" parent="Team1" instance=ExtResource( 12 )]
 position = Vector2( 288, 32 )

@@ -10,7 +10,7 @@ var data := {
 	"attack": 9,"move_type": 0,},
 	2: {"name": "Antitank", "max_hp": 20,
 	"move_range": 4, "attack_range": Vector2(1,2),
-	"attack": 9,"move_type": 0,},
+	"attack": 8,"move_type": 0,},
 	3: {"name": "Flamer", "max_hp": 18,
 	"move_range": 6, "attack_range": Vector2(1,2),
 	"attack": 8,"move_type": 1,},
@@ -31,5 +31,5 @@ var data := {
 	"attack": 10,"move_type": 0,},
 	9: {"name": "Agent", "max_hp": 12,
 	"move_range": 5, "attack_range": Vector2(1,1),
-	"attack": 10,"move_type": 0,},
+	"attack": 6,"move_type": 0,},
 }

@@ -43,6 +43,6 @@ func get_target_cells(team_target: int) -> Array:
 	elif team_target == 1:
 		team_units = get_parent().team2_units
 	for cell in attack_range_cells:
-		if team_units.has(cell):
+		if team_units.has(cell) and team_units[cell] != get_parent()._active_unit:
 			targets.append(cell)
 	return targets

@@ -2,6 +2,8 @@ extends Node2D
 
 enum STATE {MOVING, COMMAND, MENU, TARGET, WAIT}
 var cursor_state = STATE.MOVING
+enum TARGET {ATTACK, HEAL, BUILD}
+var target_type = TARGET.ATTACK
 
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var ui_cooldown := 0.1
@@ -13,9 +15,14 @@ signal cursor_moved(cell)
 signal accept_pressed(cell)
 signal cancel_pressed(cell)
 signal attack_command()
+signal heal_command()
+signal build_command()
+signal capture_command()
 signal item_command()
 signal wait_command()
 signal end_turn()
+signal focus_on_attack()
+signal focus_on_heal()
 
 var valid_targets := []
 var current_target := 0
@@ -27,7 +34,8 @@ func _ready() -> void:
 	position = grid.get_map_position(cell)
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
 	$MapMenu.visible = (cursor_state == STATE.MENU)
-	$DefenseIntel.visible = (cursor_state == STATE.TARGET)
+	$Intel/Defense.visible = (cursor_state == STATE.TARGET and target_type == TARGET.ATTACK)
+	$Intel/Heal.visible = (cursor_state == STATE.TARGET and target_type == TARGET.HEAL)
 
 func bound_camera() -> void:
 	_camera.limit_left = 0
@@ -47,13 +55,21 @@ func set_cursor_state(state: int) -> void:
 	cursor_state = state
 	$UnitMenu.visible = (cursor_state == STATE.COMMAND)
 	$MapMenu.visible = (cursor_state == STATE.MENU)
-	$DefenseIntel.visible = (cursor_state == STATE.TARGET)
+	$Intel/Defense.visible = (cursor_state == STATE.TARGET and target_type == TARGET.ATTACK)
+	$Intel/Heal.visible = (cursor_state == STATE.TARGET and target_type == TARGET.HEAL)
 	if $UnitMenu.visible:
 		$UnitMenu/Cancel.grab_focus()
 	elif $MapMenu.visible:
 		$MapMenu/Cancel.grab_focus()
-	elif $DefenseIntel.visible:
+	elif $Intel/Defense.visible:
+		current_target = 0
 		self.cell = valid_targets[current_target]
+	elif $Intel/Heal.visible:
+		current_target = 0
+		self.cell = valid_targets[current_target]
+
+func set_target_type(type: int) -> void:
+	target_type = type
 
 var past_cell := cell
 func _unhandled_input(event) -> void:
@@ -112,7 +128,7 @@ func _unhandled_input(event) -> void:
 			emit_signal("cursor_moved", cell)
 
 func update_defense_intel(target_hp, target_defense) -> void:
-	$DefenseIntel/Label.text = """HP: %s
+	$Intel/Defense.text = """HP: %s
 DEF: %s""" % [str(target_hp), str(target_defense)]
 
 func _on_Attack_pressed() -> void:
@@ -129,3 +145,24 @@ func _on_Cancel_pressed() -> void:
 
 func _on_EndTurn_pressed() -> void:
 	emit_signal("end_turn")
+
+func _on_Heal_pressed() -> void:
+	emit_signal("heal_command")
+
+func _on_Build_pressed() -> void:
+	emit_signal("build_command")
+
+func _on_Capture_pressed() -> void:
+	emit_signal("capture_command")
+
+func _on_Attack_focus_entered() -> void:
+	emit_signal("focus_on_attack")
+
+func _on_Heal_focus_entered() -> void:
+	emit_signal("focus_on_heal")
+
+func _on_Attack_mouse_entered() -> void:
+	emit_signal("focus_on_attack")
+
+func _on_Heal_mouse_entered() -> void:
+	emit_signal("focus_on_heal")

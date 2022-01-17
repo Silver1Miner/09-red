@@ -3,10 +3,9 @@ class_name Pawn
 
 signal walk_finished
 enum STATE {READY, AWAITING_ORDER, WAIT}
-enum STATUS {NORMAL, BURN}
 enum TEAM {RED, BLU}
 var pawn_state = STATE.READY
-var status_effect = STATUS.NORMAL
+var burn_count := 0
 
 export var pawn_type := 0
 export var attack_range := Vector2(2,3)
@@ -63,6 +62,14 @@ func take_damage(damage) -> void:
 func destroyed() -> void:
 	emit_signal("destroyed", cell)
 	queue_free()
+
+func set_on_fire() -> void:
+	burn_count = 2
+
+func take_fire_damage() -> void:
+	if burn_count > 0:
+		burn_count -= 1
+		take_damage(2)
 
 # ======
 # MOTION

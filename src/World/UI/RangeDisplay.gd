@@ -9,3 +9,8 @@ func draw_attack(cells: Array) -> void:
 	clear()
 	for cell in cells:
 		set_cellv(cell, 1)
+
+func draw_heal(cells: Array) -> void:
+	clear()
+	for cell in cells:
+		set_cellv(cell, 2)

@@ -29,9 +29,19 @@ func _ready() -> void:
 		push_error("connect fail")
 	if cursor.connect("attack_command", self, "_on_attack_command") != OK:
 		push_error("connect fail")
+	if cursor.connect("heal_command", self, "_on_heal_command") != OK:
+		push_error("connect fail")
+	if cursor.connect("build_command", self, "_on_build_command") != OK:
+		push_error("connect fail")
+	if cursor.connect("capture_command", self, "_on_capture_command") != OK:
+		push_error("connect fail")
 	if cursor.connect("item_command", self, "_on_item_command") != OK:
 		push_error("connect fail")
 	if cursor.connect("wait_command", self, "_on_wait_command") != OK:
+		push_error("connect fail")
+	if cursor.connect("focus_on_attack", self, "_on_focus_on_attack") != OK:
+		push_error("connect fail")
+	if cursor.connect("focus_on_heal", self, "_on_focus_on_heal") != OK:
 		push_error("connect fail")
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
@@ -43,7 +53,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_clear_active_unit()
 
 func _on_cursor_moved(cell) -> void:
-	if cursor.cursor_state == cursor.STATE.TARGET:
+	if cursor.cursor_state == cursor.STATE.TARGET and cursor.target_type == cursor.TARGET.ATTACK:
 		cursor.update_defense_intel(team2_units[cell].hp, TerrainData.data[terrain.get_cellv(cell)]["defense"])
 	elif _active_unit and _active_unit.is_selected and cell in _walkable_cells:
 		var path = pathfinder.calculate_point_path(_active_unit.cell, cell)
@@ -51,7 +61,10 @@ func _on_cursor_moved(cell) -> void:
 
 func _on_accept_pressed(cell) -> void:
 	if cursor.cursor_state == cursor.STATE.TARGET:
-		calculate_battle(cell)
+		if cursor.target_type == cursor.TARGET.ATTACK:
+			calculate_battle(cell)
+		elif cursor.target_type == cursor.TARGET.HEAL:
+			calculate_heal(cell)
 	elif not is_occupied(cell) and not _active_unit:
 		cursor.set_cursor_state(cursor.STATE.MENU)
 	elif not _active_unit:
@@ -120,6 +133,7 @@ func _select_unit(cell: Vector2) -> void:
 	_active_unit.is_selected = true
 	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type)
 	range_display.draw_move(_walkable_cells)
+	cursor.valid_targets = battle_manager.get_target_cells(1)
 
 func _deselect_active_unit() -> void:
 	_active_unit.is_selected = false
@@ -144,6 +158,9 @@ func _move_active_unit(end_cell: Vector2) -> void:
 	cursor.valid_targets = battle_manager.get_target_cells(1)
 	cursor.set_cursor_state(cursor.STATE.COMMAND)
 	cursor.get_node("UnitMenu/Attack").visible = (len(battle_manager.get_target_cells(1)) > 0)
+	cursor.get_node("UnitMenu/Heal").visible = (_active_unit.pawn_type == 7 and len(battle_manager.get_target_cells(0)) > 0)
+	cursor.get_node("UnitMenu/Build").visible = (_active_unit.pawn_type == 6 and terrain.get_cellv(end_cell) in TerrainData.buildable_cells)
+	cursor.get_node("UnitMenu/Capture").visible = (_active_unit.pawn_type == 9 and terrain.get_cellv(end_cell) in TerrainData.capturable_cells)
 	#_clear_active_unit()
 
 func _confirm_move() -> void:
@@ -162,19 +179,44 @@ func _cancel_move() -> void:
 	_deselect_active_unit()
 	_clear_active_unit()
 
+func _on_focus_on_attack() -> void:
+	cursor.set_target_type(cursor.TARGET.ATTACK)
+	#cursor.valid_targets = battle_manager.get_target_cells(1)
+	range_display.draw_attack(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
+
+func _on_focus_on_heal() -> void:
+	cursor.set_target_type(cursor.TARGET.HEAL)
+	#cursor.valid_targets = battle_manager.get_target_cells(0)
+	range_display.draw_heal(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
+
 func _on_attack_command() -> void:
 	print("attack command")
 	#range_display.draw_attack(battle_manager.get_attack_range_cells(_active_unit.cell, _active_unit.attack_range))
+	cursor.valid_targets = battle_manager.get_target_cells(1)
+	cursor.set_target_type(cursor.TARGET.ATTACK)
 	cursor.set_cursor_state(cursor.STATE.TARGET)
 	#cursor.valid_targets = battle_manager.get_target_cells(1)
 	print(cursor.valid_targets)
 	#_confirm_move()
+
+func _on_heal_command() -> void:
+	print("heal command")
+	cursor.valid_targets = battle_manager.get_target_cells(0)
+	cursor.set_target_type(cursor.TARGET.HEAL)
+	cursor.set_cursor_state(cursor.STATE.TARGET)
+	print(cursor.valid_targets)
+
+func _on_build_command() -> void:
+	print("build command")
+	change_terrain(_active_unit.cell)
 
 func calculate_battle(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " attacked unit at ", target_cell)
 	var damage = clamp(_active_unit.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	print(damage, " damage")
 	team2_units[target_cell].take_damage(damage)
+	if _active_unit.pawn_type == 3:
+		team2_units[target_cell].set_on_fire()
 	_confirm_move()
 
 func calculate_heal(target_cell: Vector2) -> void:
@@ -188,6 +230,10 @@ func change_terrain(target_cell: Vector2) -> void:
 
 func _on_item_command() -> void:
 	print("item command")
+	_confirm_move()
+
+func _on_capture_command() -> void:
+	print("win game")
 	_confirm_move()
 
 func _on_wait_command() -> void:

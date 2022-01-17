@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/World/UI/RangeDisplay.gd" type="Script" id=1]
 [ext_resource path="res://assets/UI/move-overlay.png" type="Texture" id=2]
 [ext_resource path="res://assets/UI/attack_overlay.png" type="Texture" id=3]
+[ext_resource path="res://assets/UI/heal_overlay.png" type="Texture" id=4]
 
 [sub_resource type="TileSet" id=1]
 0/name = "move-overlay.png 0"
@@ -33,6 +34,20 @@
 1/shape_one_way_margin = 0.0
 1/shapes = [  ]
 1/z_index = 0
+2/name = "heal_overlay.png 2"
+2/texture = ExtResource( 4 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 16, 16 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
 
 [node name="RangeDisplay" type="TileMap"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
