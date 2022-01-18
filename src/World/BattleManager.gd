@@ -6,8 +6,6 @@ export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 var _astar := AStar2D.new()
 onready var terrain = $"../Terrain"
-onready var team1 = $"../Team1"
-onready var team2 = $"../Team2"
 
 var attack_range_cells := []
 func get_attack_range_cells(cell: Vector2, attack_range: Vector2) -> Array:

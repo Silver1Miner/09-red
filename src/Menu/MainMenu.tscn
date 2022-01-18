@@ -56,7 +56,7 @@ margin_top = 60.0
 margin_right = 150.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 40 )
-text = "Load Game"
+text = "Continue"
 
 [node name="Settings" type="Button" parent="Options"]
 margin_top = 120.0

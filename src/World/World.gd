@@ -1,6 +1,6 @@
 extends Node
 
-export var map_size = Vector2(21, 14)
+export var map_size = Vector2(21, 16)
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 
@@ -99,7 +99,7 @@ func recount_units() -> void:
 		if pawn.connect("destroyed", self, "_on_team1_pawn_destroyed") != OK:
 			push_error("connect fail")
 		team1_units[pawn.cell] = pawn
-	for child in $Team2.get_children():
+	for child in $EnemyAI.get_children():
 		var pawn := child as Pawn
 		if not pawn:
 			continue
@@ -214,18 +214,23 @@ func calculate_battle(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " attacked unit at ", target_cell)
 	var damage = clamp(_active_unit.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	print(damage, " damage")
-	team2_units[target_cell].take_damage(damage)
 	if _active_unit.pawn_type == 3:
-		team2_units[target_cell].set_on_fire()
+		if team2_units[target_cell].pawn_type != 3:
+			team2_units[target_cell].set_on_fire()
+	team2_units[target_cell].take_damage(damage)
 	_confirm_move()
 
 func calculate_heal(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " healing unit at ", target_cell)
 	team1_units[target_cell].take_damage(-10)
+	team1_units[target_cell].extinguish_fire()
 	_confirm_move()
 
 func change_terrain(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " changing terrain at ", target_cell)
+	if terrain.get_cellv(target_cell) in TerrainData.buildable_cells:
+		var target = terrain.get_cellv(target_cell)
+		terrain.set_cellv(target_cell, TerrainData.buildable_cells[target])
 	_confirm_move()
 
 func _on_item_command() -> void:

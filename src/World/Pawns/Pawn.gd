@@ -7,6 +7,7 @@ enum TEAM {RED, BLU}
 var pawn_state = STATE.READY
 var burn_count := 0
 
+export var guarding := false
 export var pawn_type := 0
 export var attack_range := Vector2(2,3)
 export var hp := 20 setget _set_HP
@@ -65,6 +66,9 @@ func destroyed() -> void:
 
 func set_on_fire() -> void:
 	burn_count = 2
+
+func extinguish_fire() -> void:
+	burn_count = 0
 
 func take_fire_damage() -> void:
 	if burn_count > 0:
