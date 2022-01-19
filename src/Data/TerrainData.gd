@@ -9,7 +9,7 @@ var capturable_cells = [9]
 var data := {
 	-1: {
 		"name": "empty", "defense": 0,
-		"move_cost": [-1, -1, -1], # Foot, Tread, Tire
+		"move_cost": [99, 99, 99], # Foot, Tread, Tire
 	},
 	2: {
 		"name": "plain", "defense": 1,
@@ -21,7 +21,7 @@ var data := {
 	},
 	1: {
 		"name": "hill", "defense": 4,
-		"move_cost": [2, -1, -1],
+		"move_cost": [2, 99, 99],
 	},
 	3: {
 		"name": "road", "defense": 0,
@@ -29,11 +29,11 @@ var data := {
 	},
 	4: {
 		"name": "river", "defense": 0,
-		"move_cost": [2,-1,-1],
+		"move_cost": [2,99,99],
 	},
 	5: {
 		"name": "broken-bridge", "defense": 0,
-		"move_cost": [2,-1,-1],
+		"move_cost": [2,99,99],
 	},
 	6: {
 		"name": "bridge", "defense": 0,

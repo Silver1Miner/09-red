@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/Pawns/EnemyPawns/flamer-blu-Sheet.png" type="Texture" id=2]
 
 [node name="FlamerEnemy" instance=ExtResource( 1 )]
-pawn_type = 2
+pawn_type = 3
 
 [node name="Sprite" parent="PathFollow2D" index="1"]
 texture = ExtResource( 2 )

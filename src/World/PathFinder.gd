@@ -7,6 +7,7 @@ export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 var _astar := AStar2D.new()
 onready var terrain = $"../Terrain"
+onready var battle_manager = $"../BattleManager"
 
 func cell_map(walkable_cells, moving_type) -> Dictionary:
 	var cell_mappings := {}
@@ -48,12 +49,21 @@ func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int) -> Ar
 				endpoints.append(end)
 	return endpoints
 
+func get_valid_endpoint_attack_range(endpoints: Array, attack_range: Vector2) -> Array:
+	var attack_points = []
+	for cell in endpoints:
+		var points = battle_manager.get_attack_range_cells(cell, attack_range)
+		for point in points:
+			if not point in attack_points and not point in endpoints:
+				attack_points.append(point)
+	return attack_points
+
 func get_terrain_move_cost(cell: Vector2, moving_type: int) -> float:
 	return TerrainData.data[terrain.get_cellv(cell)]["move_cost"][moving_type]
 
 func _add_and_connect_points(cell_mappings: Dictionary, moving_type: int) -> void:
 	for point in cell_mappings:
-		if get_terrain_move_cost(point, moving_type) > 0:
+		if get_terrain_move_cost(point, moving_type) > 0 and get_terrain_move_cost(point, moving_type) < 10:
 			_astar.add_point(cell_mappings[point], point, get_terrain_move_cost(point, moving_type))
 	for point in cell_mappings:
 		for neighbor_index in _find_neighbor_indices(point, cell_mappings):
@@ -81,5 +91,7 @@ func calculate_point_path(start: Vector2, end: Vector2) -> PoolVector2Array:
 func get_path_move_cost(path: PoolVector2Array, moving_type: int) -> int:
 	var cost = 0
 	for point in path:
-		cost += get_terrain_move_cost(point, moving_type)
+		var point_cost = get_terrain_move_cost(point, moving_type)
+		if point_cost > 0:
+			cost += get_terrain_move_cost(point, moving_type)
 	return cost

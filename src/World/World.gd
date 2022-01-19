@@ -19,6 +19,8 @@ var _walkable_cells := []
 var turn_count := 1
 
 func _ready() -> void:
+	if $EnemyAI.connect("AI_finished", self, "_on_AI_finished") != OK:
+		push_error("AI signal connect fail")
 	grid.board_size = map_size
 	cursor.bound_camera()
 	if cursor.connect("cursor_moved", self, "_on_cursor_moved") != OK:
@@ -77,11 +79,17 @@ func _on_cancel_pressed(cell) -> void:
 		_cancel_move()
 	elif cursor.cursor_state == cursor.STATE.MENU:
 		cursor.set_cursor_state(cursor.STATE.MOVING)
+		_clear_active_unit()
 	else:
+		_clear_active_unit()
 		if team1_units.has(cell):
+			# TODO: get pawn intel
 			range_display.draw_attack(battle_manager.get_attack_range_cells(cell, team1_units[cell].attack_range))
 		elif team2_units.has(cell):
-			range_display.draw_attack(battle_manager.get_attack_range_cells(cell, team2_units[cell].attack_range))
+			var intel_unit = team2_units[cell]
+			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type)
+			var attackable = pathfinder.get_valid_endpoint_attack_range(walkable, intel_unit.attack_range)
+			range_display.draw_move_attack(walkable, attackable)
 		else:
 			range_display.clear()
 		print(TerrainData.data[terrain.get_cellv(cell)])
@@ -132,11 +140,13 @@ func _select_unit(cell: Vector2) -> void:
 	_active_unit = team1_units[cell]
 	_active_unit.is_selected = true
 	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type)
-	range_display.draw_move(_walkable_cells)
+	var attackable_cells = pathfinder.get_valid_endpoint_attack_range(_walkable_cells, _active_unit.attack_range)
+	range_display.draw_move_attack(_walkable_cells, attackable_cells)
 	cursor.valid_targets = battle_manager.get_target_cells(1)
 
 func _deselect_active_unit() -> void:
 	_active_unit.is_selected = false
+	#_active_unit = null
 	range_display.clear()
 	path_display.clear()
 
@@ -161,7 +171,6 @@ func _move_active_unit(end_cell: Vector2) -> void:
 	cursor.get_node("UnitMenu/Heal").visible = (_active_unit.pawn_type == 7 and len(battle_manager.get_target_cells(0)) > 0)
 	cursor.get_node("UnitMenu/Build").visible = (_active_unit.pawn_type == 6 and terrain.get_cellv(end_cell) in TerrainData.buildable_cells)
 	cursor.get_node("UnitMenu/Capture").visible = (_active_unit.pawn_type == 9 and terrain.get_cellv(end_cell) in TerrainData.capturable_cells)
-	#_clear_active_unit()
 
 func _confirm_move() -> void:
 	if not team1_units.erase(_active_unit.prev_cell):
@@ -242,6 +251,7 @@ func _on_capture_command() -> void:
 	_confirm_move()
 
 func _on_wait_command() -> void:
+	print("wait")
 	_confirm_move()
 
 func _on_end_turn() -> void:
@@ -249,4 +259,8 @@ func _on_end_turn() -> void:
 	turn_count += 1
 	for unit in $Team1.get_children():
 		unit.set_pawn_state(unit.STATE.READY)
+	$EnemyAI.execute_AI_turn()
+
+func _on_AI_finished() -> void:
+	print("AI finished")
 	cursor.set_cursor_state(cursor.STATE.MOVING)
