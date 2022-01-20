@@ -74,21 +74,27 @@ script = ExtResource( 24 )
 
 [node name="TankEnemy" parent="EnemyAI" instance=ExtResource( 9 )]
 position = Vector2( 384, 192 )
+guarding = true
 
 [node name="SharpShootEnemy" parent="EnemyAI" instance=ExtResource( 21 )]
 position = Vector2( 448, 64 )
+guarding = true
 
 [node name="GrenadeEnemy" parent="EnemyAI" instance=ExtResource( 20 )]
 position = Vector2( 512, 128 )
+guarding = true
 
 [node name="RangerEnemy" parent="EnemyAI" instance=ExtResource( 23 )]
 position = Vector2( 64, 384 )
+guarding = true
 
 [node name="RangerEnemy2" parent="EnemyAI" instance=ExtResource( 23 )]
-position = Vector2( 0, 352 )
+position = Vector2( 32, 352 )
+guarding = true
 
 [node name="FlamerEnemy" parent="EnemyAI" instance=ExtResource( 22 )]
 position = Vector2( 128, 352 )
+guarding = true
 
 [node name="ObjectRegistry" parent="." instance=ExtResource( 11 )]
 

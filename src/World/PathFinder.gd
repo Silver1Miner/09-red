@@ -49,7 +49,16 @@ func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int) -> Ar
 				endpoints.append(end)
 	return endpoints
 
-func get_valid_endpoint_attack_range(endpoints: Array, attack_range: Vector2) -> Array:
+func get_valid_attack_points(endpoints: Array, attack_range: Vector2) -> Array:
+	var attack_points = []
+	for cell in endpoints:
+		var points = battle_manager.get_attack_range_cells(cell, attack_range)
+		for point in points:
+			if not point in attack_points:
+				attack_points.append(point)
+	return attack_points
+
+func get_valid_attack_points_minus_move(endpoints: Array, attack_range: Vector2) -> Array:
 	var attack_points = []
 	for cell in endpoints:
 		var points = battle_manager.get_attack_range_cells(cell, attack_range)

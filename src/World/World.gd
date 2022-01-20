@@ -68,6 +68,7 @@ func _on_accept_pressed(cell) -> void:
 		elif cursor.target_type == cursor.TARGET.HEAL:
 			calculate_heal(cell)
 	elif not is_occupied(cell) and not _active_unit:
+		range_display.clear()
 		cursor.set_cursor_state(cursor.STATE.MENU)
 	elif not _active_unit:
 		_select_unit(cell)
@@ -84,12 +85,13 @@ func _on_cancel_pressed(cell) -> void:
 		_clear_active_unit()
 		if team1_units.has(cell):
 			# TODO: get pawn intel
-			range_display.draw_attack(battle_manager.get_attack_range_cells(cell, team1_units[cell].attack_range))
+			var intel_unit = team1_units[cell]
+			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type)
+			range_display.draw_attack(pathfinder.get_valid_attack_points(walkable, intel_unit.attack_range))
 		elif team2_units.has(cell):
 			var intel_unit = team2_units[cell]
 			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type)
-			var attackable = pathfinder.get_valid_endpoint_attack_range(walkable, intel_unit.attack_range)
-			range_display.draw_move_attack(walkable, attackable)
+			range_display.draw_attack(pathfinder.get_valid_attack_points(walkable, intel_unit.attack_range))
 		else:
 			range_display.clear()
 		print(TerrainData.data[terrain.get_cellv(cell)])
@@ -132,6 +134,11 @@ func create_explosion(cell) -> void:
 	explosion_instance.position = grid.get_map_position(cell) + Vector2(16,0)
 
 func _select_unit(cell: Vector2) -> void:
+	if team2_units.has(cell):
+		var walkable_cells = pathfinder.get_valid_endpoints(cell, team2_units[cell].move_range, team2_units[cell].move_type)
+		var attackable_cells = pathfinder.get_valid_attack_points_minus_move(walkable_cells, team2_units[cell].attack_range)
+		range_display.draw_move_attack(walkable_cells, attackable_cells)
+		return
 	if not team1_units.has(cell):
 		return
 	if team1_units[cell].pawn_state == team1_units[cell].STATE.WAIT:
@@ -140,7 +147,7 @@ func _select_unit(cell: Vector2) -> void:
 	_active_unit = team1_units[cell]
 	_active_unit.is_selected = true
 	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type)
-	var attackable_cells = pathfinder.get_valid_endpoint_attack_range(_walkable_cells, _active_unit.attack_range)
+	var attackable_cells = pathfinder.get_valid_attack_points_minus_move(_walkable_cells, _active_unit.attack_range)
 	range_display.draw_move_attack(_walkable_cells, attackable_cells)
 	cursor.valid_targets = battle_manager.get_target_cells(1)
 
