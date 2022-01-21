@@ -266,8 +266,10 @@ func _on_end_turn() -> void:
 	turn_count += 1
 	for unit in $Team1.get_children():
 		unit.set_pawn_state(unit.STATE.READY)
+	cursor.visible = false
 	$EnemyAI.execute_AI_turn()
 
 func _on_AI_finished() -> void:
 	print("AI finished")
+	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
