@@ -7,9 +7,6 @@ onready var battle_manager = $"../BattleManager"
 onready var terrain = $"../Terrain"
 signal AI_finished()
 
-signal pawn_move_finished()
-signal pawn_action_finished()
-
 var agent_cell = Vector2.ZERO
 
 func execute_AI_turn() -> void:
@@ -17,7 +14,8 @@ func execute_AI_turn() -> void:
 	print(agent_cell)
 	for child in get_children():
 		yield(get_tree().create_timer(1.0), "timeout")
-		execute_order(child)
+		if child:
+			execute_order(child)
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:
@@ -30,24 +28,33 @@ func execute_order(pawn: Pawn) -> void:
 			target_cell = cell
 			break
 	if pawn.guarding:
-		print(pawn.cell, target_cell, pawn.guarding)
+		pass
 	elif target_cell:
 		AI_attack(pawn, move_range, target_cell)
 	else:
-		# move
-		print(pawn.cell, target_cell, pawn.guarding)
-	emit_signal("pawn_action_finished")
+		AI_chase(pawn, move_range, agent_cell)
+
+func AI_chase(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
+	var min_distance = null
+	var goal_cell = Vector2.ZERO
+	for cell in move_range:
+		var difference: Vector2 = (target_cell - cell).abs()
+		var distance := int(difference.x + difference.y)
+		if not min_distance or distance < min_distance:
+			min_distance = distance
+			goal_cell = cell
+	AI_move(pawn, goal_cell)
 
 func AI_attack(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
-	print(pawn.cell, target_cell, pawn.guarding)
 	for cell in move_range:
 		if target_cell in battle_manager.get_attack_range_cells(cell, pawn.attack_range):
 			AI_move(pawn, cell)
-			yield(self, "pawn_move_finished")
+			yield(get_tree().create_timer(0.5), "timeout")
 			AI_battle(pawn, target_cell)
 			break
 
 func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
+	print(pawn.cell)
 	var damage = clamp(pawn.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	if pawn.pawn_type == 3:
 		if get_parent().team1_units[target_cell].pawn_type != 3:
@@ -60,4 +67,3 @@ func AI_move(pawn, end_cell) -> void:
 		print("unit not found")
 	get_parent().team2_units[pawn.cell] = pawn
 	pawn.prev_cell = pawn.cell
-	emit_signal("pawn_move_finished")

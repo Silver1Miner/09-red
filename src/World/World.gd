@@ -163,8 +163,13 @@ func _clear_active_unit() -> void:
 
 func _move_active_unit(end_cell: Vector2) -> void:
 	if end_cell == _active_unit.cell:
-		cursor.set_cursor_state(cursor.STATE.COMMAND)
 		range_display.draw_attack(battle_manager.get_attack_range_cells(end_cell, _active_unit.attack_range))
+		cursor.valid_targets = battle_manager.get_target_cells(1)
+		cursor.set_cursor_state(cursor.STATE.COMMAND)
+		cursor.get_node("UnitMenu/Attack").visible = (len(battle_manager.get_target_cells(1)) > 0)
+		cursor.get_node("UnitMenu/Heal").visible = (_active_unit.pawn_type == 7 and len(battle_manager.get_target_cells(0)) > 0)
+		cursor.get_node("UnitMenu/Build").visible = (_active_unit.pawn_type == 6 and terrain.get_cellv(end_cell) in TerrainData.buildable_cells)
+		cursor.get_node("UnitMenu/Capture").visible = (_active_unit.pawn_type == 9 and terrain.get_cellv(end_cell) in TerrainData.capturable_cells)
 		return
 	elif is_occupied(end_cell) or not end_cell in _walkable_cells:
 		return
