@@ -40,14 +40,14 @@ func AI_chase(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
 	for cell in move_range:
 		var difference: Vector2 = (target_cell - cell).abs()
 		var distance := int(difference.x + difference.y)
-		if not min_distance or distance < min_distance:
+		if not min_distance or distance < min_distance and not get_parent().is_occupied(cell):
 			min_distance = distance
 			goal_cell = cell
 	AI_move(pawn, goal_cell)
 
 func AI_attack(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
 	for cell in move_range:
-		if target_cell in battle_manager.get_attack_range_cells(cell, pawn.attack_range):
+		if not get_parent().is_occupied(cell) and target_cell in battle_manager.get_attack_range_cells(cell, pawn.attack_range):
 			AI_move(pawn, cell)
 			yield(get_tree().create_timer(0.5), "timeout")
 			AI_battle(pawn, target_cell)
@@ -62,6 +62,8 @@ func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 	get_parent().team1_units[target_cell].take_damage(damage)
 
 func AI_move(pawn, end_cell) -> void:
+	if get_parent().is_occupied(end_cell):
+		push_error("aI trying to move into occupied cell")
 	pawn.walk_along(pathfinder.calculate_point_path(pawn.cell, end_cell))
 	if not get_parent().team2_units.erase(pawn.prev_cell):
 		print("unit not found")

@@ -77,9 +77,9 @@ func _add_and_connect_points(cell_mappings: Dictionary, moving_type: int, team: 
 	for point in cell_mappings:
 		if get_terrain_move_cost(point, moving_type) > 0 and get_terrain_move_cost(point, moving_type) < 10:
 			if get_parent().is_occupied(point) and team == 0 and team == 0 and get_parent().team2_units.has(point):
-				pass
+				continue
 			elif get_parent().is_occupied(point) and team == 1 and get_parent().team1_units.has(point):
-				pass
+				continue
 			else:
 				_astar.add_point(cell_mappings[point], point, get_terrain_move_cost(point, moving_type))
 	for point in cell_mappings:

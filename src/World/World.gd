@@ -10,6 +10,7 @@ onready var battle_manager = $BattleManager
 onready var range_display = $RangeDisplay
 onready var path_display = $PathDisplay
 onready var cursor = $Cursor
+onready var turn_change = $GUI/TurnChangeScreen
 var team1_units := {}
 var team2_units := {}
 
@@ -48,6 +49,8 @@ func _ready() -> void:
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
 	recount_units()
+	turn_change.play_turn_change(turn_count, "Player")
+	yield(get_tree().create_timer(3.0), "timeout")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _active_unit and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right")):
@@ -269,13 +272,17 @@ func _on_wait_command() -> void:
 
 func _on_end_turn() -> void:
 	print("end turn")
-	turn_count += 1
 	for unit in $Team1.get_children():
 		unit.set_pawn_state(unit.STATE.READY)
 	cursor.visible = false
+	turn_change.play_turn_change(turn_count, "Enemy")
+	yield(get_tree().create_timer(3.0), "timeout")
 	$EnemyAI.execute_AI_turn()
 
 func _on_AI_finished() -> void:
 	print("AI finished")
+	turn_count += 1
+	turn_change.play_turn_change(turn_count, "Player")
+	yield(get_tree().create_timer(3.0), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
