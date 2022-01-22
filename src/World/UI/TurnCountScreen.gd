@@ -8,6 +8,5 @@ func play_turn_change(turn_count: int, whose_turn: String) -> void:
 func _on_AnimationPlayer_animation_started(_anim_name: String) -> void:
 	visible = true
 
-
 func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
 	visible = false

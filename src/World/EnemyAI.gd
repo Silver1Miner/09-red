@@ -5,17 +5,21 @@ export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 onready var pathfinder = $"../PathFinder"
 onready var battle_manager = $"../BattleManager"
 onready var terrain = $"../Terrain"
+onready var cursor = $"../Cursor"
 signal AI_finished()
 
 var agent_cell = Vector2.ZERO
 
 func execute_AI_turn() -> void:
-	agent_cell = get_parent().get_node("Team1/Agent").cell
+	if get_parent().has_node("Team1/Agent"):
+		agent_cell = get_parent().get_node("Team1/Agent").cell
+	else:
+		push_error("agent was destroyed")
 	print(agent_cell)
 	for child in get_children():
-		yield(get_tree().create_timer(1.0), "timeout")
 		if child:
 			execute_order(child)
+		yield(get_tree().create_timer(1.0), "timeout")
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:
@@ -62,8 +66,9 @@ func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 	get_parent().team1_units[target_cell].take_damage(damage)
 
 func AI_move(pawn, end_cell) -> void:
+	cursor.set_cell(end_cell)
 	if get_parent().is_occupied(end_cell):
-		push_error("aI trying to move into occupied cell")
+		push_error("ai trying to move into occupied cell")
 	pawn.walk_along(pathfinder.calculate_point_path(pawn.cell, end_cell))
 	if not get_parent().team2_units.erase(pawn.prev_cell):
 		print("unit not found")
