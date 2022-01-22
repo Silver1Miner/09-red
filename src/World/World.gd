@@ -86,11 +86,11 @@ func _on_cancel_pressed(cell) -> void:
 		if team1_units.has(cell):
 			# TODO: get pawn intel
 			var intel_unit = team1_units[cell]
-			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type)
+			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type, 0)
 			range_display.draw_attack(pathfinder.get_valid_attack_points(walkable, intel_unit.attack_range))
 		elif team2_units.has(cell):
 			var intel_unit = team2_units[cell]
-			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type)
+			var walkable = pathfinder.get_valid_endpoints(intel_unit.cell, intel_unit.move_range, intel_unit.move_type, 1)
 			range_display.draw_attack(pathfinder.get_valid_attack_points(walkable, intel_unit.attack_range))
 		else:
 			range_display.clear()
@@ -135,18 +135,19 @@ func create_explosion(cell) -> void:
 
 func _select_unit(cell: Vector2) -> void:
 	if team2_units.has(cell):
-		var walkable_cells = pathfinder.get_valid_endpoints(cell, team2_units[cell].move_range, team2_units[cell].move_type)
+		_clear_active_unit()
+		var walkable_cells = pathfinder.get_valid_endpoints(cell, team2_units[cell].move_range, team2_units[cell].move_type, 1)
 		var attackable_cells = pathfinder.get_valid_attack_points_minus_move(walkable_cells, team2_units[cell].attack_range)
 		range_display.draw_move_attack(walkable_cells, attackable_cells)
 		return
 	if not team1_units.has(cell):
 		return
 	if team1_units[cell].pawn_state == team1_units[cell].STATE.WAIT:
-		print("unit is wait")
+		print("unit has moved")
 		return
 	_active_unit = team1_units[cell]
 	_active_unit.is_selected = true
-	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type)
+	_walkable_cells = pathfinder.get_valid_endpoints(_active_unit.cell, _active_unit.move_range, _active_unit.move_type, 0)
 	var attackable_cells = pathfinder.get_valid_attack_points_minus_move(_walkable_cells, _active_unit.attack_range)
 	range_display.draw_move_attack(_walkable_cells, attackable_cells)
 	cursor.valid_targets = battle_manager.get_target_cells(1)

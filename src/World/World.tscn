@@ -43,19 +43,19 @@ script = ExtResource( 10 )
 [node name="Team1" type="YSort" parent="."]
 
 [node name="Ranger" parent="Team1" instance=ExtResource( 6 )]
-position = Vector2( 160, 192 )
+position = Vector2( 160, 224 )
 
 [node name="Agent" parent="Team1" instance=ExtResource( 15 )]
 position = Vector2( 96, 96 )
 
 [node name="Antitank" parent="Team1" instance=ExtResource( 13 )]
-position = Vector2( 128, 224 )
+position = Vector2( 192, 256 )
 
 [node name="Flamer" parent="Team1" instance=ExtResource( 14 )]
 position = Vector2( 224, 192 )
 
 [node name="Grenadier" parent="Team1" instance=ExtResource( 16 )]
-position = Vector2( 192, 160 )
+position = Vector2( 224, 96 )
 
 [node name="Medic" parent="Team1" instance=ExtResource( 18 )]
 position = Vector2( 128, 160 )
@@ -67,13 +67,13 @@ position = Vector2( 160, 128 )
 position = Vector2( 160, 64 )
 
 [node name="Tank" parent="Team1" instance=ExtResource( 12 )]
-position = Vector2( 224, 96 )
+position = Vector2( 288, 96 )
 
 [node name="EnemyAI" type="YSort" parent="."]
 script = ExtResource( 24 )
 
 [node name="TankEnemy" parent="EnemyAI" instance=ExtResource( 9 )]
-position = Vector2( 384, 192 )
+position = Vector2( 352, 96 )
 
 [node name="SharpShootEnemy" parent="EnemyAI" instance=ExtResource( 21 )]
 position = Vector2( 448, 64 )

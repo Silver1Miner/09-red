@@ -9,14 +9,14 @@ var _astar := AStar2D.new()
 onready var terrain = $"../Terrain"
 onready var battle_manager = $"../BattleManager"
 
-func cell_map(walkable_cells, moving_type) -> Dictionary:
+func cell_map(walkable_cells, moving_type, team) -> Dictionary:
 	var cell_mappings := {}
 	for cell in walkable_cells:
 		cell_mappings[cell] = grid.as_index(cell)
-	_add_and_connect_points(cell_mappings, moving_type)
+	_add_and_connect_points(cell_mappings, moving_type, team)
 	return cell_mappings
 
-func get_flood_fill(cell: Vector2, max_distance: int) -> Array:
+func get_flood_fill(cell: Vector2, max_distance: int, team: int) -> Array:
 	var array := []
 	var stack := [cell]
 	while not stack.empty():
@@ -32,17 +32,19 @@ func get_flood_fill(cell: Vector2, max_distance: int) -> Array:
 		array.append(current)
 		for direction in DIRECTIONS:
 			var coordinates: Vector2 = current + direction
-			if get_parent().is_occupied(coordinates):
+			if get_parent().is_occupied(coordinates) and team == 0 and get_parent().team2_units.has(coordinates):
+				continue
+			if get_parent().is_occupied(coordinates) and team == 1 and get_parent().team1_units.has(coordinates):
 				continue
 			if coordinates in array:
 				continue
 			stack.append(coordinates)
 	return array
 
-func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int) -> Array:
+func get_valid_endpoints(cell: Vector2, move_range: int, moving_type: int, team: int) -> Array:
 	var endpoints = []
-	var limits = get_flood_fill(cell, move_range)
-	var cell_mappings = cell_map(limits, moving_type)
+	var limits = get_flood_fill(cell, move_range, team)
+	var cell_mappings = cell_map(limits, moving_type, team)
 	for end in limits:
 		if _astar.has_point(cell_mappings[end]) and get_path_move_cost(calculate_point_path(cell, end),moving_type) <= move_range and len(calculate_point_path(cell, end)) != 0:
 			if not endpoints.has(end):
@@ -70,10 +72,16 @@ func get_valid_attack_points_minus_move(endpoints: Array, attack_range: Vector2)
 func get_terrain_move_cost(cell: Vector2, moving_type: int) -> float:
 	return TerrainData.data[terrain.get_cellv(cell)]["move_cost"][moving_type]
 
-func _add_and_connect_points(cell_mappings: Dictionary, moving_type: int) -> void:
+func _add_and_connect_points(cell_mappings: Dictionary, moving_type: int, team: int) -> void:
+	_astar.clear()
 	for point in cell_mappings:
 		if get_terrain_move_cost(point, moving_type) > 0 and get_terrain_move_cost(point, moving_type) < 10:
-			_astar.add_point(cell_mappings[point], point, get_terrain_move_cost(point, moving_type))
+			if get_parent().is_occupied(point) and team == 0 and team == 0 and get_parent().team2_units.has(point):
+				pass
+			elif get_parent().is_occupied(point) and team == 1 and get_parent().team1_units.has(point):
+				pass
+			else:
+				_astar.add_point(cell_mappings[point], point, get_terrain_move_cost(point, moving_type))
 	for point in cell_mappings:
 		for neighbor_index in _find_neighbor_indices(point, cell_mappings):
 			if _astar.has_point(cell_mappings[point]) and _astar.has_point(neighbor_index):

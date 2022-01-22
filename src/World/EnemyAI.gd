@@ -19,7 +19,7 @@ func execute_AI_turn() -> void:
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:
-	var move_range = pathfinder.get_valid_endpoints(pawn.cell, pawn.move_range, pawn.move_type)
+	var move_range = pathfinder.get_valid_endpoints(pawn.cell, pawn.move_range, pawn.move_type, pawn.team)
 	var attackable_cells = pathfinder.get_valid_attack_points(move_range, pawn.attack_range)
 	var target_cell = null
 	for cell in attackable_cells:
