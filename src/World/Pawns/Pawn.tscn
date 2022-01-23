@@ -214,6 +214,7 @@ vframes = 4
 visible = false
 position = Vector2( 24, 22 )
 frames = SubResource( 10 )
+frame = 1
 playing = true
 
 [node name="TextureProgress" type="TextureProgress" parent="PathFollow2D"]

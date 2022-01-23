@@ -24,6 +24,7 @@ func execute_AI_turn() -> void:
 		if child:
 			execute_order(child)
 		yield(get_tree().create_timer(1.0), "timeout")
+		child.set_pawn_state(child.STATE.READY)
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:
