@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/World/Cursor/Cursor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Terrain/Terrain.tscn" type="PackedScene" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://src/World/Pawns/EnemyPawns/RangerEnemy.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/World/EnemyAI.gd" type="Script" id=24]
 [ext_resource path="res://src/World/UI/TurnCountScreen.tscn" type="PackedScene" id=25]
+[ext_resource path="res://src/World/Pawns/Pawn.gd" type="Script" id=26]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -76,24 +77,36 @@ script = ExtResource( 24 )
 
 [node name="TankEnemy" parent="EnemyAI" instance=ExtResource( 9 )]
 position = Vector2( 352, 96 )
+curve = null
+script = ExtResource( 26 )
 
 [node name="SharpShootEnemy" parent="EnemyAI" instance=ExtResource( 21 )]
 position = Vector2( 448, 64 )
+curve = null
+script = ExtResource( 26 )
 guarding = true
 
 [node name="GrenadeEnemy" parent="EnemyAI" instance=ExtResource( 20 )]
 position = Vector2( 512, 128 )
+curve = null
+script = ExtResource( 26 )
 
 [node name="RangerEnemy" parent="EnemyAI" instance=ExtResource( 23 )]
 position = Vector2( 64, 384 )
+curve = null
+script = ExtResource( 26 )
 guarding = true
 
 [node name="RangerEnemy2" parent="EnemyAI" instance=ExtResource( 23 )]
 position = Vector2( 32, 352 )
+curve = null
+script = ExtResource( 26 )
 guarding = true
 
 [node name="FlamerEnemy" parent="EnemyAI" instance=ExtResource( 22 )]
 position = Vector2( 128, 352 )
+curve = null
+script = ExtResource( 26 )
 
 [node name="ObjectRegistry" parent="." instance=ExtResource( 11 )]
 

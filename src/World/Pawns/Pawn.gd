@@ -29,12 +29,13 @@ onready var _sprite: Sprite = $PathFollow2D/Sprite
 onready var _anim_player: AnimationPlayer = $AnimationPlayer
 onready var _path_follow: PathFollow2D = $PathFollow2D
 onready var _hp_bar: TextureProgress = $PathFollow2D/TextureProgress
-signal destroyed(cell)
+signal destroyed(cell, pawn_type)
 
 func _ready() -> void:
 	load_pawn_data()
 	_hp_bar.max_value = max_hp
 	_hp_bar.value = hp
+	set_pawn_state(STATE.READY)
 	set_process(false)
 	self.cell = grid.get_cell_coordinates(position)
 	self.prev_cell = cell
@@ -61,7 +62,7 @@ func take_damage(damage) -> void:
 	_set_HP(hp - damage)
 
 func destroyed() -> void:
-	emit_signal("destroyed", cell)
+	emit_signal("destroyed", cell, pawn_type)
 	queue_free()
 
 func set_on_fire() -> void:
@@ -84,6 +85,9 @@ func take_fire_damage() -> bool:
 # ======
 # MOTION
 # ======
+var _position_last_frame := Vector2()
+var _cardinal_direction := 0
+var _cardinal_direction_last_frame := 0
 func _process(delta: float) -> void:
 	_path_follow.offset += move_speed * delta
 	if _path_follow.unit_offset >= 1.0:
@@ -92,6 +96,23 @@ func _process(delta: float) -> void:
 		position = grid.get_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
+	var motion = position - _position_last_frame
+	if motion.length() > 0.01:
+		_cardinal_direction = int(4.0 * (motion.rotated(PI/4.0).angle() + PI) / TAU)
+	if _cardinal_direction != _cardinal_direction_last_frame:
+		match _cardinal_direction:
+			0:
+				_sprite.set_flip_h(false)
+				_anim_player.play("walk_left")
+			1:
+				_anim_player.play("walk_up")
+			2:
+				_sprite.set_flip_h(true)
+				_anim_player.play("walk_left")
+			3:
+				_anim_player.play("walk_down")
+	_position_last_frame = position
+	_cardinal_direction_last_frame = _cardinal_direction
 
 func walk_along(path: PoolVector2Array) -> void:
 	if path.empty():
@@ -112,6 +133,7 @@ func set_cell(value: Vector2) -> void:
 
 func set_pawn_state(state: int) -> void:
 	pawn_state = state
+	_sprite.set_flip_h(false)
 	match pawn_state:
 		STATE.WAIT:
 			_anim_player.play("waiting")

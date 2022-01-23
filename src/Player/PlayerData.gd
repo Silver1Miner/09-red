@@ -8,3 +8,5 @@ func load_player_data() -> void:
 
 func save_player_data() -> void:
 	pass
+
+var level_status := [false, false, false]

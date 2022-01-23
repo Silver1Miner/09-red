@@ -1,5 +1,6 @@
 extends Node
 
+export var level_number := 0
 export var map_size = Vector2(21, 16)
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
@@ -120,12 +121,15 @@ func recount_units() -> void:
 			push_error("connect fail")
 		team2_units[pawn.cell] = pawn
 
-func _on_team1_pawn_destroyed(cell) -> void:
+func _on_team1_pawn_destroyed(cell, pawn_type) -> void:
 	if !team1_units.erase(cell):
 		push_error("cell not in team 1")
 	create_explosion(cell)
+	if pawn_type == 9:
+		yield(get_tree().create_timer(0.5), "timeout")
+		lose_game()
 
-func _on_team2_pawn_destroyed(cell) -> void:
+func _on_team2_pawn_destroyed(cell, _pawn_type) -> void:
 	if !team2_units.erase(cell):
 		push_error("cell not in team 2")
 	create_explosion(cell)
@@ -263,8 +267,8 @@ func _on_item_command() -> void:
 	_confirm_move()
 
 func _on_capture_command() -> void:
-	print("win game")
 	_confirm_move()
+	win_game()
 
 func _on_wait_command() -> void:
 	print("wait")
@@ -295,3 +299,10 @@ func _on_AI_finished() -> void:
 			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
+
+func lose_game() -> void:
+	print("game lost")
+
+func win_game() -> void:
+	PlayerData.level_status[level_number] = true
+	print("game won")
