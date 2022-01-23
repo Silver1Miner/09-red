@@ -1,12 +1,37 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/World/Pawns/Pawn.gd" type="Script" id=1]
+[ext_resource path="res://assets/Effects/fire-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://assets/UI/progress-bar-under.png" type="Texture" id=3]
 [ext_resource path="res://assets/UI/progress-bar-fill.png" type="Texture" id=4]
 [ext_resource path="res://assets/UI/progress-bar-over.png" type="Texture" id=5]
 
 [sub_resource type="StreamTexture" id=5]
 load_path = "res://.import/infantry-red-Sheet.png-7bc9ae601edff76a0164537eca521f71.stex"
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 15, 20 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 15, 0, 15, 20 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 30, 0, 15, 20 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 45, 0, 15, 20 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -79,9 +104,22 @@ script = ExtResource( 1 )
 rotate = false
 loop = false
 
+[node name="Sprite" type="Sprite" parent="PathFollow2D"]
+position = Vector2( 16, 16 )
+scale = Vector2( 2, 2 )
+texture = SubResource( 5 )
+hframes = 3
+vframes = 3
+
+[node name="Fire" type="AnimatedSprite" parent="PathFollow2D"]
+visible = false
+position = Vector2( 24, 22 )
+frames = SubResource( 10 )
+playing = true
+
 [node name="TextureProgress" type="TextureProgress" parent="PathFollow2D"]
-margin_top = -4.0
 margin_right = 32.0
+margin_bottom = 2.0
 texture_under = ExtResource( 3 )
 texture_over = ExtResource( 5 )
 texture_progress = ExtResource( 4 )
@@ -89,13 +127,6 @@ nine_patch_stretch = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Sprite" type="Sprite" parent="PathFollow2D"]
-position = Vector2( 16, 16 )
-scale = Vector2( 2, 2 )
-texture = SubResource( 5 )
-hframes = 3
-vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 1 )

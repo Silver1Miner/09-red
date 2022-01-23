@@ -17,6 +17,10 @@ func execute_AI_turn() -> void:
 		push_error("agent was destroyed")
 	print(agent_cell)
 	for child in get_children():
+		if child.take_fire_damage():
+			cursor.set_cell(child.cell)
+			yield(get_tree().create_timer(0.5), "timeout")
+	for child in get_children():
 		if child:
 			execute_order(child)
 		yield(get_tree().create_timer(1.0), "timeout")

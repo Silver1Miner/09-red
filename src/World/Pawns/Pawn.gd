@@ -66,14 +66,20 @@ func destroyed() -> void:
 
 func set_on_fire() -> void:
 	burn_count = 2
+	$PathFollow2D/Fire.visible = true
 
 func extinguish_fire() -> void:
 	burn_count = 0
+	$PathFollow2D/Fire.visible = false
 
-func take_fire_damage() -> void:
+func take_fire_damage() -> bool:
 	if burn_count > 0:
-		burn_count -= 1
 		take_damage(2)
+		burn_count -= 1
+		if burn_count == 0:
+			extinguish_fire()
+		return true
+	return false
 
 # ======
 # MOTION

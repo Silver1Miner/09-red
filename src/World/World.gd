@@ -284,5 +284,14 @@ func _on_AI_finished() -> void:
 	turn_count += 1
 	turn_change.play_turn_change(turn_count, "Player")
 	yield(get_tree().create_timer(3.0), "timeout")
+	for child in $Team1.get_children():
+		if child.take_fire_damage():
+			cursor.set_cell(child.cell)
+			yield(get_tree().create_timer(0.5), "timeout")
+		if terrain.get_cellv(child.cell) == 8:
+			child.take_damage(-5)
+			child.extinguish_fire()
+			cursor.set_cell(child.cell)
+			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
