@@ -25,7 +25,7 @@
 [ext_resource path="res://src/World/Pawns/EnemyPawns/RangerEnemy.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/World/EnemyAI.gd" type="Script" id=24]
 [ext_resource path="res://src/World/UI/TurnCountScreen.tscn" type="PackedScene" id=25]
-[ext_resource path="res://src/World/Pawns/Pawn.gd" type="Script" id=26]
+[ext_resource path="res://src/World/UI/GameOver.tscn" type="PackedScene" id=26]
 
 [node name="World" type="Node"]
 script = ExtResource( 3 )
@@ -77,36 +77,24 @@ script = ExtResource( 24 )
 
 [node name="TankEnemy" parent="EnemyAI" instance=ExtResource( 9 )]
 position = Vector2( 352, 96 )
-curve = null
-script = ExtResource( 26 )
 
 [node name="SharpShootEnemy" parent="EnemyAI" instance=ExtResource( 21 )]
 position = Vector2( 448, 64 )
-curve = null
-script = ExtResource( 26 )
 guarding = true
 
 [node name="GrenadeEnemy" parent="EnemyAI" instance=ExtResource( 20 )]
 position = Vector2( 512, 128 )
-curve = null
-script = ExtResource( 26 )
 
 [node name="RangerEnemy" parent="EnemyAI" instance=ExtResource( 23 )]
 position = Vector2( 64, 384 )
-curve = null
-script = ExtResource( 26 )
 guarding = true
 
 [node name="RangerEnemy2" parent="EnemyAI" instance=ExtResource( 23 )]
 position = Vector2( 32, 352 )
-curve = null
-script = ExtResource( 26 )
 guarding = true
 
 [node name="FlamerEnemy" parent="EnemyAI" instance=ExtResource( 22 )]
 position = Vector2( 128, 352 )
-curve = null
-script = ExtResource( 26 )
 
 [node name="ObjectRegistry" parent="." instance=ExtResource( 11 )]
 
@@ -119,3 +107,13 @@ position = Vector2( 320, 256 )
 visible = false
 
 [node name="TurnChangeScreen" parent="GUI" instance=ExtResource( 25 )]
+visible = false
+
+[node name="GameOver" parent="GUI" instance=ExtResource( 26 )]
+visible = false
+
+[connection signal="pressed" from="GUI/GameOver/Options/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="pressed" from="GUI/GameOver/Options/ToOverWorld" to="." method="_on_ToOverWorld_pressed"]
+[connection signal="pressed" from="GUI/GameOver/Options/ToMenu" to="." method="_on_ToMenu_pressed"]
+
+[editable path="GUI/GameOver"]

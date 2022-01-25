@@ -90,14 +90,8 @@ var _cardinal_direction := 0
 var _cardinal_direction_last_frame := 0
 func _process(delta: float) -> void:
 	_path_follow.offset += move_speed * delta
-	if _path_follow.unit_offset >= 1.0:
-		self._is_walking = false
-		_path_follow.offset = 0.0
-		position = grid.get_map_position(cell)
-		curve.clear_points()
-		emit_signal("walk_finished")
-	var motion = position - _position_last_frame
-	if motion.length() > 0.01:
+	var motion = _path_follow.position - _position_last_frame
+	if motion.length() > 0.1:
 		_cardinal_direction = int(4.0 * (motion.rotated(PI/4.0).angle() + PI) / TAU)
 	if _cardinal_direction != _cardinal_direction_last_frame:
 		match _cardinal_direction:
@@ -111,8 +105,14 @@ func _process(delta: float) -> void:
 				_anim_player.play("walk_left")
 			3:
 				_anim_player.play("walk_down")
-	_position_last_frame = position
+	_position_last_frame = _path_follow.position
 	_cardinal_direction_last_frame = _cardinal_direction
+	if _path_follow.unit_offset >= 1.0:
+		self._is_walking = false
+		_path_follow.offset = 0.0
+		position = grid.get_map_position(cell)
+		curve.clear_points()
+		emit_signal("walk_finished")
 
 func walk_along(path: PoolVector2Array) -> void:
 	if path.empty():

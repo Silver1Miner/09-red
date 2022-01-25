@@ -289,12 +289,12 @@ func _on_AI_finished() -> void:
 	turn_change.play_turn_change(turn_count, "Player")
 	yield(get_tree().create_timer(3.0), "timeout")
 	for child in $Team1.get_children():
-		if child.take_fire_damage():
-			cursor.set_cell(child.cell)
-			yield(get_tree().create_timer(0.5), "timeout")
 		if terrain.get_cellv(child.cell) == 8:
 			child.take_damage(-5)
 			child.extinguish_fire()
+			cursor.set_cell(child.cell)
+			yield(get_tree().create_timer(0.5), "timeout")
+		if child.take_fire_damage():
 			cursor.set_cell(child.cell)
 			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
@@ -302,7 +302,23 @@ func _on_AI_finished() -> void:
 
 func lose_game() -> void:
 	print("game lost")
+	$GUI/GameOver/Victory.visible = false
+	$GUI/GameOver/Defeat.visible = true
+	$GUI/GameOver.visible = true
 
 func win_game() -> void:
 	PlayerData.level_status[level_number] = true
-	print("game won")
+	$GUI/GameOver/Victory.visible = true
+	$GUI/GameOver/Defeat.visible = false
+	$GUI/GameOver.visible = true
+
+func _on_Restart_pressed() -> void:
+	if get_tree().reload_current_scene() != OK:
+		push_error("failed to restart scene")
+
+func _on_ToOverWorld_pressed() -> void:
+	pass # Replace with function body.
+
+func _on_ToMenu_pressed() -> void:
+	if get_tree().change_scene("res://src/Menu/MainMenu.tscn") != OK:
+		push_error("fail to go to main menu")
