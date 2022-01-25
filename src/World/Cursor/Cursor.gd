@@ -44,12 +44,42 @@ func bound_camera() -> void:
 	_camera.limit_bottom = grid.get_map_bounds().y * grid.cell_size.y
 	_camera.reset_smoothing()
 
+func set_interface_bottom_right() -> void:
+	$Intel.rect_position = Vector2(32, 0)
+	$UnitMenu.rect_position = Vector2(32, 0)
+	$MapMenu.rect_position = Vector2(32, 0)
+
+func set_interface_bottom_left() -> void:
+	$Intel.rect_position = Vector2(-60, 0)
+	$UnitMenu.rect_position = Vector2(-54, 0)
+	$MapMenu.rect_position = Vector2(-67, 0)
+
+func set_interface_top_right() -> void:
+	$Intel.rect_position = Vector2(32, 0)
+	$UnitMenu.rect_position = Vector2(32,32-$UnitMenu.rect_size.y)
+	$MapMenu.rect_position = Vector2(32,32-$MapMenu.rect_size.y)
+
+func set_interface_top_left() -> void:
+	$Intel.rect_position = Vector2(-60, 0)
+	$UnitMenu.rect_position = Vector2(-54, 32-$UnitMenu.rect_size.y)
+	$MapMenu.rect_position = Vector2(-67, 32-$MapMenu.rect_size.y)
+
 func set_cell(input: Vector2) -> void:
 	var new_cell: Vector2 = grid.clamp_to_board(input)
 	if new_cell.is_equal_approx(cell):
 		return
 	cell = new_cell
 	position = grid.get_map_position(cell)
+	if grid.get_map_bounds().x - cell.x < 4:
+		if grid.get_map_bounds().y - cell.y < 4:
+			set_interface_top_left()
+		else:
+			set_interface_bottom_left()
+	else:
+		if grid.get_map_bounds().y - cell.y < 4:
+			set_interface_top_right()
+		else:
+			set_interface_bottom_right()
 
 func set_cursor_state(state: int) -> void:
 	cursor_state = state
