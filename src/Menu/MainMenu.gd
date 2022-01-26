@@ -9,12 +9,12 @@ func _ready() -> void:
 
 func _on_NewGame_pressed() -> void:
 	print("New Game")
-	if get_tree().change_scene("res://src/Menu/OverWorld.tscn") != OK:
+	if get_tree().change_scene_to(PlayerData.over_world) != OK:
 		push_error("fail to load world")
 
 func _on_LoadGame_pressed() -> void:
 	print("Load Game")
-	if get_tree().change_scene("res://src/Menu/OverWorld.tscn") != OK:
+	if get_tree().change_scene_to(PlayerData.over_world) != OK:
 		push_error("fail to load world")
 
 func _on_Settings_pressed() -> void:

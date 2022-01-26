@@ -4,6 +4,7 @@ export var level_number := 0
 export var map_size = Vector2(21, 16)
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
+export var TextData: Resource = preload("res://src/Data/TextData.tres")
 
 onready var terrain = $Terrain
 onready var pathfinder = $PathFinder
@@ -19,6 +20,8 @@ var _active_unit: Pawn
 var _walkable_cells := []
 
 var turn_count := 1
+enum GAME_STATE {WIN, LOSE, CONTINUING}
+var game_state = GAME_STATE.CONTINUING
 
 func _ready() -> void:
 	if $EnemyAI.connect("AI_finished", self, "_on_AI_finished") != OK:
@@ -49,7 +52,23 @@ func _ready() -> void:
 		push_error("connect fail")
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
+	if $GUI/Textbox.connect("text_finished", self, "_on_text_finished") != OK:
+		push_error("textbox signal connect fail")
 	recount_units()
+	$GUI/Textbox.initialize(TextData.data[level_number]["start"])
+
+func _on_text_finished() -> void:
+	if turn_count == 1:
+		start_mission()
+	elif game_state == GAME_STATE.LOSE:
+		$GUI/GameOver/Victory.visible = false
+		$GUI/GameOver/Defeat.visible = true
+		$GUI/GameOver.visible = true
+	elif game_state == GAME_STATE.WIN:
+		if get_tree().change_scene_to(PlayerData.over_world) != OK:
+			push_error("fail to go to main menu")
+
+func start_mission() -> void:
 	turn_change.play_turn_change(turn_count, "Player")
 	yield(get_tree().create_timer(3.0), "timeout")
 
@@ -299,26 +318,28 @@ func _on_AI_finished() -> void:
 			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
+	if game_state == GAME_STATE.LOSE:
+		$GUI/Textbox.initialize(TextData.data[level_number]["lose"])
 
 func lose_game() -> void:
-	print("game lost")
-	$GUI/GameOver/Victory.visible = false
-	$GUI/GameOver/Defeat.visible = true
-	$GUI/GameOver.visible = true
+	game_state = GAME_STATE.LOSE
 
 func win_game() -> void:
-	PlayerData.level_status[level_number] = true
-	$GUI/GameOver/Victory.visible = true
-	$GUI/GameOver/Defeat.visible = false
-	$GUI/GameOver.visible = true
+	game_state = GAME_STATE.WIN
+	PlayerData.completed_levels[level_number] = true
+	$GUI/Textbox.initialize(TextData.data[level_number]["win"])
+	#$GUI/GameOver/Victory.visible = true
+	#$GUI/GameOver/Defeat.visible = false
+	#$GUI/GameOver.visible = true
 
 func _on_Restart_pressed() -> void:
 	if get_tree().reload_current_scene() != OK:
 		push_error("failed to restart scene")
 
 func _on_ToOverWorld_pressed() -> void:
-	pass # Replace with function body.
+	if get_tree().change_scene_to(PlayerData.over_world) != OK:
+		push_error("fail to go to main menu")
 
 func _on_ToMenu_pressed() -> void:
-	if get_tree().change_scene("res://src/Menu/MainMenu.tscn") != OK:
+	if get_tree().change_scene_to(PlayerData.main_menu) != OK:
 		push_error("fail to go to main menu")

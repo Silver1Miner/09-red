@@ -56,13 +56,13 @@ func set_interface_bottom_left() -> void:
 
 func set_interface_top_right() -> void:
 	$Intel.rect_position = Vector2(32, 0)
-	$UnitMenu.rect_position = Vector2(32,32-$UnitMenu.rect_size.y)
-	$MapMenu.rect_position = Vector2(32,32-$MapMenu.rect_size.y)
+	$UnitMenu.rect_position = Vector2(32,-$UnitMenu/Wait.rect_position.y)
+	$MapMenu.rect_position = Vector2(32,-$MapMenu/EndTurn.rect_position.y)
 
 func set_interface_top_left() -> void:
 	$Intel.rect_position = Vector2(-60, 0)
-	$UnitMenu.rect_position = Vector2(-54, 32-$UnitMenu.rect_size.y)
-	$MapMenu.rect_position = Vector2(-67, 32-$MapMenu.rect_size.y)
+	$UnitMenu.rect_position = Vector2(-54,-$UnitMenu/Wait.rect_position.y)
+	$MapMenu.rect_position = Vector2(-67,-$MapMenu/EndTurn.rect_position.y)
 
 func set_cell(input: Vector2) -> void:
 	var new_cell: Vector2 = grid.clamp_to_board(input)

@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "TerrainData",
 "language": "GDScript",
 "path": "res://src/Data/TerrainData.gd"
+}, {
+"base": "Resource",
+"class": "TextData",
+"language": "GDScript",
+"path": "res://src/Data/TextData.gd"
 } ]
 _global_script_class_icons={
 "Grid": "",
 "PathFinder": "",
 "Pawn": "",
 "PawnData": "",
-"TerrainData": ""
+"TerrainData": "",
+"TextData": ""
 }
 
 [application]
