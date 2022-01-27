@@ -1,28 +1,15 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/World/Cursor/Cursor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Terrain/Terrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/World/World.gd" type="Script" id=3]
 [ext_resource path="res://src/World/UI/PathDisplay.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/World/PathFinder.gd" type="Script" id=5]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Ranger.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/World/UI/RangeDisplay.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/Text/Textbox.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/TankEnemy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/World/BattleManager.gd" type="Script" id=10]
 [ext_resource path="res://src/World/Effects/ObjectRegistry.tscn" type="PackedScene" id=11]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Tank.tscn" type="PackedScene" id=12]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Antitank.tscn" type="PackedScene" id=13]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Flamer.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/World/Pawns/PlayerPawns/Agent.tscn" type="PackedScene" id=15]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Grenadier.tscn" type="PackedScene" id=16]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Sharpshooter.tscn" type="PackedScene" id=17]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Medic.tscn" type="PackedScene" id=18]
-[ext_resource path="res://src/World/Pawns/PlayerPawns/Sapper.tscn" type="PackedScene" id=19]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/GrenadeEnemy.tscn" type="PackedScene" id=20]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/SharpShootEnemy.tscn" type="PackedScene" id=21]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/FlamerEnemy.tscn" type="PackedScene" id=22]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/RangerEnemy.tscn" type="PackedScene" id=23]
 [ext_resource path="res://src/World/EnemyAI.gd" type="Script" id=24]
 [ext_resource path="res://src/World/UI/TurnCountScreen.tscn" type="PackedScene" id=25]
 [ext_resource path="res://src/World/UI/GameOver.tscn" type="PackedScene" id=26]
@@ -45,56 +32,11 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 3, 65539, 3, 2, 0, 4, 0, 0, 5, 2,
 
 [node name="Team1" type="YSort" parent="."]
 
-[node name="Ranger" parent="Team1" instance=ExtResource( 6 )]
-position = Vector2( 160, 224 )
-
 [node name="Agent" parent="Team1" instance=ExtResource( 15 )]
 position = Vector2( 576, 224 )
 
-[node name="Antitank" parent="Team1" instance=ExtResource( 13 )]
-position = Vector2( 192, 256 )
-
-[node name="Flamer" parent="Team1" instance=ExtResource( 14 )]
-position = Vector2( 224, 192 )
-
-[node name="Grenadier" parent="Team1" instance=ExtResource( 16 )]
-position = Vector2( 224, 96 )
-
-[node name="Medic" parent="Team1" instance=ExtResource( 18 )]
-position = Vector2( 128, 160 )
-
-[node name="Sapper" parent="Team1" instance=ExtResource( 19 )]
-position = Vector2( 160, 128 )
-
-[node name="Sharpshooter" parent="Team1" instance=ExtResource( 17 )]
-position = Vector2( 160, 64 )
-
-[node name="Tank" parent="Team1" instance=ExtResource( 12 )]
-position = Vector2( 288, 96 )
-
 [node name="EnemyAI" type="YSort" parent="."]
 script = ExtResource( 24 )
-
-[node name="TankEnemy" parent="EnemyAI" instance=ExtResource( 9 )]
-position = Vector2( 352, 96 )
-
-[node name="SharpShootEnemy" parent="EnemyAI" instance=ExtResource( 21 )]
-position = Vector2( 448, 64 )
-guarding = true
-
-[node name="GrenadeEnemy" parent="EnemyAI" instance=ExtResource( 20 )]
-position = Vector2( 512, 128 )
-
-[node name="RangerEnemy" parent="EnemyAI" instance=ExtResource( 23 )]
-position = Vector2( 64, 384 )
-guarding = true
-
-[node name="RangerEnemy2" parent="EnemyAI" instance=ExtResource( 23 )]
-position = Vector2( 32, 352 )
-guarding = true
-
-[node name="FlamerEnemy" parent="EnemyAI" instance=ExtResource( 22 )]
-position = Vector2( 128, 352 )
 
 [node name="ObjectRegistry" parent="." instance=ExtResource( 11 )]
 

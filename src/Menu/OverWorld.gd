@@ -19,3 +19,7 @@ func _on_ToMission3_pressed() -> void:
 func _on_ToMission0_pressed() -> void:
 	if get_tree().change_scene_to(PlayerData.level_0) != OK:
 		push_error("fail to load world")
+
+func _on_ToMainMenu_pressed() -> void:
+	if get_tree().change_scene_to(PlayerData.main_menu) != OK:
+		push_error("fail to load world")

@@ -59,7 +59,18 @@ margin_right = 119.955
 margin_bottom = 117.369
 text = "Mission 0"
 
+[node name="ToMainMenu" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -32.9545
+margin_bottom = 21.3685
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="ToMission1" to="." method="_on_ToMission1_pressed"]
 [connection signal="pressed" from="ToMission2" to="." method="_on_ToMission2_pressed"]
 [connection signal="pressed" from="ToMission3" to="." method="_on_ToMission3_pressed"]
 [connection signal="pressed" from="ToMission0" to="." method="_on_ToMission0_pressed"]
+[connection signal="pressed" from="ToMainMenu" to="." method="_on_ToMainMenu_pressed"]

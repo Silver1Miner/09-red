@@ -24,4 +24,5 @@ func save_player_data() -> void:
 
 var main_menu := preload("res://src/Menu/MainMenu.tscn")
 var over_world := preload("res://src/Menu/OverWorld.tscn")
-var level_0 := preload("res://src/world/World.tscn")
+var base_world := preload("res://src/world/World.tscn")
+var level_0 := preload("res://src/World/Levels/Level0.tscn")
