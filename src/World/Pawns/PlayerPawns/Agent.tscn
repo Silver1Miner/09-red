@@ -6,5 +6,5 @@
 [node name="Agent" instance=ExtResource( 2 )]
 pawn_type = 9
 
-[node name="Sprite" parent="PathFollow2D" index="1"]
+[node name="Sprite" parent="PathFollow2D" index="0"]
 texture = ExtResource( 1 )

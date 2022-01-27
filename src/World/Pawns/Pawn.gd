@@ -138,6 +138,10 @@ func set_pawn_state(state: int) -> void:
 		STATE.WAIT:
 			_anim_player.play("waiting")
 		STATE.AWAITING_ORDER:
+			if team == 0:
+				_sprite.set_flip_h(true)
+			else:
+				_sprite.set_flip_h(false)
 			_anim_player.play("selected")
 		STATE.READY:
 			_anim_player.play("idle")
