@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/World/World.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/World/Pawns/EnemyPawns/TankEnemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/World/Pawns/EnemyPawns/FlamerEnemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/World/Pawns/EnemyPawns/RangerEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Antitank.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Ranger.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Medic.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Flamer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Tank.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Sharpshooter.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Sapper.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/World/Pawns/PlayerPawns/Grenadier.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/World/Pawns/PawnEnemy.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/World/Pawns/EnemyPawns/GrenadeEnemy.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/World/Pawns/EnemyPawns/SharpShootEnemy.tscn" type="PackedScene" id=15]
+
+[node name="Level8" instance=ExtResource( 1 )]
+level_number = 8
+
+[node name="Terrain" parent="." index="2"]
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 2, 3, 65539, 3, 2, 0, 4, 0, 0, 5, 2, 0, 6, 2, 0, 7, 4, 65539, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 0, 0, 13, 4, 65539, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 3, 65539, 19, 2, 0, 20, 2, 0, 65536, 0, 0, 65537, 2, 0, 65538, 3, 131075, 65539, 0, 0, 65540, 2, 0, 65541, 2, 0, 65542, 2, 0, 65543, 4, 131075, 65544, 2, 0, 65545, 0, 0, 65546, 1, 0, 65547, 0, 0, 65548, 2, 0, 65549, 4, 131075, 65550, 2, 0, 65551, 2, 0, 65552, 1, 0, 65553, 3, 65536, 65554, 3, 196610, 65555, 2, 0, 65556, 2, 0, 131072, 0, 0, 131073, 2, 0, 131074, 3, 131075, 131075, 2, 0, 131076, 7, 0, 131077, 2, 0, 131078, 2, 0, 131079, 4, 196611, 131080, 1, 0, 131081, 2, 0, 131082, 2, 0, 131083, 2, 0, 131084, 1, 0, 131085, 4, 196611, 131086, 2, 0, 131087, 2, 0, 131088, 1, 0, 131089, 3, 131075, 131090, 2, 0, 131091, 2, 0, 131092, 2, 0, 196608, 2, 0, 196609, 2, 0, 196610, 3, 131072, 196611, 3, 2, 196612, 3, 1, 196613, 3, 2, 196614, 3, 3, 196615, 5, 0, 196616, 3, 0, 196617, 3, 2, 196618, 3, 2, 196619, 3, 1, 196620, 3, 3, 196621, 5, 0, 196622, 3, 0, 196623, 3, 1, 196624, 3, 1, 196625, 3, 131074, 196626, 9, 0, 196627, 0, 0, 196628, 0, 0, 262144, 2, 0, 262145, 1, 0, 262146, 3, 131075, 262147, 2, 0, 262148, 2, 0, 262149, 2, 0, 262150, 2, 0, 262151, 4, 65539, 262152, 2, 0, 262153, 0, 0, 262154, 0, 0, 262155, 2, 0, 262156, 2, 0, 262157, 4, 65539, 262158, 0, 0, 262159, 0, 0, 262160, 2, 0, 262161, 3, 196608, 262162, 3, 65538, 262163, 0, 0, 262164, 2, 0, 327680, 2, 0, 327681, 0, 0, 327682, 3, 131075, 327683, 0, 0, 327684, 0, 0, 327685, 2, 0, 327686, 2, 0, 327687, 4, 196608, 327688, 4, 1, 327689, 4, 2, 327690, 4, 2, 327691, 4, 1, 327692, 4, 1, 327693, 4, 131074, 327694, 2, 0, 327695, 2, 0, 327696, 2, 0, 327697, 2, 0, 327698, 3, 131075, 327699, 0, 0, 327700, 0, 0, 393216, 2, 0, 393217, 0, 0, 393218, 3, 131075, 393219, 0, 0, 393220, 0, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 1, 0, 393225, 2, 0, 393226, 0, 0, 393227, 2, 0, 393228, 2, 0, 393229, 4, 131075, 393230, 2, 0, 393231, 2, 0, 393232, 2, 0, 393233, 0, 0, 393234, 3, 131075, 393235, 2, 0, 393236, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 3, 131075, 458755, 1, 0, 458756, 2, 0, 458757, 2, 0, 458758, 0, 0, 458759, 2, 0, 458760, 1, 0, 458761, 1, 0, 458762, 2, 0, 458763, 0, 0, 458764, 2, 0, 458765, 4, 131075, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 0, 0, 458770, 3, 131075, 458771, 2, 0, 458772, 0, 0, 524288, 2, 0, 524289, 1, 0, 524290, 3, 131075, 524291, 2, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 2, 0, 524296, 2, 0, 524297, 2, 0, 524298, 0, 0, 524299, 2, 0, 524300, 2, 0, 524301, 4, 131075, 524302, 1, 0, 524303, 2, 0, 524304, 2, 0, 524305, 7, 0, 524306, 3, 131072, 524307, 3, 1, 524308, 3, 3, 589824, 2, 0, 589825, 2, 0, 589826, 3, 131075, 589827, 0, 0, 589828, 1, 0, 589829, 2, 0, 589830, 2, 0, 589831, 8, 0, 589832, 2, 0, 589833, 2, 0, 589834, 2, 0, 589835, 1, 0, 589836, 2, 0, 589837, 4, 131075, 589838, 2, 0, 589839, 2, 0, 589840, 3, 65536, 589841, 3, 2, 589842, 3, 196610, 589843, 0, 0, 589844, 0, 0, 655360, 2, 0, 655361, 2, 0, 655362, 3, 131075, 655363, 0, 0, 655364, 2, 0, 655365, 2, 0, 655366, 2, 0, 655367, 3, 65536, 655368, 3, 1, 655369, 3, 2, 655370, 3, 2, 655371, 3, 65538, 655372, 0, 0, 655373, 4, 131075, 655374, 2, 0, 655375, 2, 0, 655376, 3, 131075, 655377, 0, 0, 655378, 0, 0, 655379, 2, 0, 655380, 2, 0, 720896, 2, 0, 720897, 2, 0, 720898, 3, 131075, 720899, 2, 0, 720900, 2, 0, 720901, 2, 0, 720902, 2, 0, 720903, 3, 131075, 720904, 2, 0, 720905, 2, 0, 720906, 2, 0, 720907, 3, 131075, 720908, 1, 0, 720909, 4, 131075, 720910, 0, 0, 720911, 2, 0, 720912, 3, 131075, 720913, 2, 0, 720914, 2, 0, 720915, 2, 0, 720916, 2, 0, 786432, 1, 0, 786433, 2, 0, 786434, 3, 131072, 786435, 3, 1, 786436, 3, 2, 786437, 3, 1, 786438, 3, 2, 786439, 3, 196610, 786440, 0, 0, 786441, 1, 0, 786442, 2, 0, 786443, 3, 131075, 786444, 0, 0, 786445, 4, 196611, 786446, 0, 0, 786447, 2, 0, 786448, 3, 131075, 786449, 0, 0, 786450, 0, 0, 786451, 2, 0, 786452, 2, 0, 851968, 2, 0, 851969, 1, 0, 851970, 3, 131075, 851971, 2, 0, 851972, 2, 0, 851973, 2, 0, 851974, 2, 0, 851975, 2, 0, 851976, 2, 0, 851977, 2, 0, 851978, 2, 0, 851979, 3, 196608, 851980, 3, 3, 851981, 6, 0, 851982, 3, 0, 851983, 3, 2, 851984, 3, 196609, 851985, 3, 1, 851986, 3, 65538, 851987, 0, 0, 851988, 2, 0, 917504, 0, 0, 917505, 2, 0, 917506, 3, 196608, 917507, 3, 2, 917508, 3, 65538, 917509, 1, 0, 917510, 2, 0, 917511, 0, 0, 917512, 0, 0, 917513, 2, 0, 917514, 0, 0, 917515, 2, 0, 917516, 2, 0, 917517, 4, 65539, 917518, 7, 0, 917519, 2, 0, 917520, 2, 0, 917521, 2, 0, 917522, 3, 196608, 917523, 3, 1, 917524, 3, 3, 983040, 2, 0, 983041, 2, 0, 983042, 2, 0, 983043, 2, 0, 983044, 3, 196611, 983045, 2, 0, 983046, 2, 0, 983047, 2, 0, 983048, 2, 0, 983049, 2, 0, 983050, 2, 0, 983051, 2, 0, 983052, 2, 0, 983053, 4, 196611, 983054, 1, 0, 983055, 2, 0, 983056, 2, 0, 983057, 2, 0, 983058, 2, 0, 983059, 0, 0, 983060, 2, 0 )
+
+[node name="Sapper" parent="Team1" index="0" instance=ExtResource( 11 )]
+position = Vector2( 192, 32 )
+
+[node name="Sharpshooter" parent="Team1" index="1" instance=ExtResource( 10 )]
+position = Vector2( 160, 160 )
+
+[node name="Tank" parent="Team1" index="2" instance=ExtResource( 9 )]
+position = Vector2( 64, 256 )
+
+[node name="Grenadier" parent="Team1" index="3" instance=ExtResource( 12 )]
+position = Vector2( 64, 192 )
+
+[node name="Antitank" parent="Team1" index="4" instance=ExtResource( 5 )]
+position = Vector2( 128, 256 )
+
+[node name="Flamer" parent="Team1" index="5" instance=ExtResource( 8 )]
+position = Vector2( 192, 192 )
+
+[node name="Medic" parent="Team1" index="6" instance=ExtResource( 7 )]
+position = Vector2( 64, 128 )
+
+[node name="Ranger" parent="Team1" index="7" instance=ExtResource( 6 )]
+position = Vector2( 64, 64 )
+
+[node name="Agent" parent="Team1" index="8"]
+position = Vector2( 96, 96 )
+
+[node name="GrenadeEnemy" parent="EnemyAI" index="0" instance=ExtResource( 14 )]
+position = Vector2( 352, 416 )
+
+[node name="GrenadeEnemy2" parent="EnemyAI" index="1" instance=ExtResource( 14 )]
+position = Vector2( 64, 448 )
+
+[node name="TankEnemy" parent="EnemyAI" index="2" instance=ExtResource( 2 )]
+position = Vector2( 512, 416 )
+guarding = true
+
+[node name="TankEnemy2" parent="EnemyAI" index="3" instance=ExtResource( 2 )]
+position = Vector2( 544, 128 )
+guarding = true
+
+[node name="SharpShootEnemy" parent="EnemyAI" index="4" instance=ExtResource( 15 )]
+position = Vector2( 608, 128 )
+guarding = true
+
+[node name="FlamerEnemy" parent="EnemyAI" index="5" instance=ExtResource( 3 )]
+position = Vector2( 320, 352 )
+guarding = true
+
+[node name="FlamerEnemy2" parent="EnemyAI" index="6" instance=ExtResource( 3 )]
+position = Vector2( 352, 64 )
+guarding = true
+
+[node name="FlamerEnemy3" parent="EnemyAI" index="7" instance=ExtResource( 3 )]
+position = Vector2( 480, 288 )
+guarding = true
+
+[node name="SharpShootEnemy2" parent="EnemyAI" index="8" instance=ExtResource( 15 )]
+position = Vector2( 608, 384 )
+guarding = true
+
+[node name="RangerEnemy" parent="EnemyAI" index="9" instance=ExtResource( 4 )]
+position = Vector2( 640, 480 )
+
+[node name="PawnEnemy" parent="EnemyAI" index="10" instance=ExtResource( 13 )]
+position = Vector2( 224, 416 )
+
+[node name="PawnEnemy2" parent="EnemyAI" index="11" instance=ExtResource( 13 )]
+position = Vector2( 448, 416 )
+
+[node name="PawnEnemy3" parent="EnemyAI" index="12" instance=ExtResource( 13 )]
+position = Vector2( 288, 480 )
+
+[node name="PawnEnemy4" parent="EnemyAI" index="13" instance=ExtResource( 13 )]
+position = Vector2( 64, 352 )
+
+[editable path="GUI/GameOver"]

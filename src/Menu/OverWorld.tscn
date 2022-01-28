@@ -22,44 +22,6 @@ expand = true
 
 [node name="Textbox" parent="." instance=ExtResource( 1 )]
 
-[node name="ToMission1" type="Button" parent="."]
-margin_left = 64.0
-margin_top = 224.0
-margin_right = 119.955
-margin_bottom = 245.369
-text = "Mission 1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ToMission2" type="Button" parent="."]
-margin_left = 224.0
-margin_top = 192.0
-margin_right = 279.955
-margin_bottom = 213.369
-text = "Mission 2"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ToMission3" type="Button" parent="."]
-margin_left = 320.0
-margin_top = 128.0
-margin_right = 375.955
-margin_bottom = 149.369
-text = "Mission 3"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ToMission0" type="Button" parent="."]
-visible = false
-margin_left = 64.0
-margin_top = 96.0
-margin_right = 119.955
-margin_bottom = 117.369
-text = "Mission 0"
-
 [node name="ToMainMenu" type="Button" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -72,8 +34,112 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ToMission0" type="Button" parent="."]
+visible = false
+margin_left = 64.0
+margin_top = 96.0
+margin_right = 119.955
+margin_bottom = 117.369
+text = "Mission 0"
+
+[node name="ToMission1" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 128.0
+margin_right = 119.955
+margin_bottom = 149.369
+text = "Mission 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission2" type="Button" parent="."]
+margin_left = 96.0
+margin_top = 224.0
+margin_right = 151.955
+margin_bottom = 245.369
+text = "Mission 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission3" type="Button" parent="."]
+margin_left = 224.0
+margin_top = 192.0
+margin_right = 279.955
+margin_bottom = 213.369
+text = "Mission 3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission4" type="Button" parent="."]
+margin_left = 288.0
+margin_top = 128.0
+margin_right = 343.955
+margin_bottom = 149.369
+text = "Mission 4"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission5" type="Button" parent="."]
+margin_left = 352.0
+margin_top = 32.0
+margin_right = 407.955
+margin_bottom = 53.3685
+text = "Mission 5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission6" type="Button" parent="."]
+margin_left = 480.0
+margin_top = 64.0
+margin_right = 535.955
+margin_bottom = 85.3685
+text = "Mission 6"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission7" type="Button" parent="."]
+margin_left = 448.0
+margin_top = 160.0
+margin_right = 503.955
+margin_bottom = 181.369
+text = "Mission 7"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission8" type="Button" parent="."]
+margin_left = 384.0
+margin_top = 224.0
+margin_right = 439.955
+margin_bottom = 245.369
+text = "Mission 8"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ToMission9" type="Button" parent="."]
+margin_left = 512.0
+margin_top = 256.0
+margin_right = 567.955
+margin_bottom = 277.369
+text = "Mission 9"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="ToMainMenu" to="." method="_on_ToMainMenu_pressed"]
+[connection signal="pressed" from="ToMission0" to="." method="_on_ToMission0_pressed"]
 [connection signal="pressed" from="ToMission1" to="." method="_on_ToMission1_pressed"]
 [connection signal="pressed" from="ToMission2" to="." method="_on_ToMission2_pressed"]
 [connection signal="pressed" from="ToMission3" to="." method="_on_ToMission3_pressed"]
-[connection signal="pressed" from="ToMission0" to="." method="_on_ToMission0_pressed"]
-[connection signal="pressed" from="ToMainMenu" to="." method="_on_ToMainMenu_pressed"]
+[connection signal="pressed" from="ToMission4" to="." method="_on_ToMission4_pressed"]
+[connection signal="pressed" from="ToMission5" to="." method="_on_ToMission5_pressed"]
+[connection signal="pressed" from="ToMission6" to="." method="_on_ToMission6_pressed"]
+[connection signal="pressed" from="ToMission7" to="." method="_on_ToMission7_pressed"]
+[connection signal="pressed" from="ToMission8" to="." method="_on_ToMission8_pressed"]
+[connection signal="pressed" from="ToMission9" to="." method="_on_ToMission9_pressed"]

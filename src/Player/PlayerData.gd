@@ -2,7 +2,7 @@ extends Node
 
 var music_db = 0.5
 var sound_db = 0.1
-var completed_levels := [true, false, false, false]
+var completed_levels := 0
 
 func load_player_data() -> void:
 	var save_game = File.new()
@@ -29,3 +29,9 @@ var level_0 := preload("res://src/World/Levels/Level0.tscn")
 var level_1 := preload("res://src/World/Levels/Level1.tscn")
 var level_2 := preload("res://src/World/Levels/Level2.tscn")
 var level_3 := preload("res://src/World/Levels/Level3.tscn")
+var level_4 := preload("res://src/World/Levels/Level4.tscn")
+var level_5 := preload("res://src/World/Levels/Level5.tscn")
+var level_6 := preload("res://src/World/Levels/Level6.tscn")
+var level_7 := preload("res://src/World/Levels/Level7.tscn")
+var level_8 := preload("res://src/World/Levels/Level8.tscn")
+var level_9 := preload("res://src/World/Levels/Level9.tscn")

@@ -329,7 +329,8 @@ func lose_game() -> void:
 
 func win_game() -> void:
 	game_state = GAME_STATE.WIN
-	PlayerData.completed_levels[level_number] = true
+	if level_number > PlayerData.completed_levels:
+		PlayerData.completed_levels = level_number
 	if level_number in TextData.level_text:
 		$GUI/Textbox.initialize(TextData.level_text[level_number]["win"])
 	else:
