@@ -132,7 +132,7 @@ var level_text := {
 	3: {
 		"start": {
 		"0": {"name":"red", "profile":"medic",
-		"text":"Good news, we got some a rocket launcher assigned to our team."},
+		"text":"Good news, we got a rocket launcher assigned to our team!"},
 		},
 		"lose": {
 		"0": {"name":"", "profile":"medic",

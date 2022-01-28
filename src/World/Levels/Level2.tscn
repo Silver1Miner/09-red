@@ -24,27 +24,24 @@ position = Vector2( 160, 160 )
 position = Vector2( 224, 288 )
 
 [node name="RangerEnemy" parent="EnemyAI" index="0" instance=ExtResource( 8 )]
-position = Vector2( 352, 96 )
-
-[node name="RangerEnemy2" parent="EnemyAI" index="1" instance=ExtResource( 8 )]
 position = Vector2( 384, 32 )
 
-[node name="PawnEnemy" parent="EnemyAI" index="2" instance=ExtResource( 2 )]
+[node name="PawnEnemy" parent="EnemyAI" index="1" instance=ExtResource( 2 )]
 position = Vector2( 288, 320 )
 
-[node name="PawnEnemy2" parent="EnemyAI" index="3" instance=ExtResource( 2 )]
+[node name="PawnEnemy2" parent="EnemyAI" index="2" instance=ExtResource( 2 )]
 position = Vector2( 32, 352 )
 
-[node name="PawnEnemy3" parent="EnemyAI" index="4" instance=ExtResource( 2 )]
+[node name="PawnEnemy3" parent="EnemyAI" index="3" instance=ExtResource( 2 )]
 position = Vector2( 64, 384 )
 
-[node name="PawnEnemy4" parent="EnemyAI" index="5" instance=ExtResource( 2 )]
+[node name="PawnEnemy4" parent="EnemyAI" index="4" instance=ExtResource( 2 )]
 position = Vector2( 64, 96 )
 
-[node name="PawnEnemy5" parent="EnemyAI" index="6" instance=ExtResource( 2 )]
+[node name="PawnEnemy5" parent="EnemyAI" index="5" instance=ExtResource( 2 )]
 position = Vector2( 512, 192 )
 
-[node name="SharpShootEnemy" parent="EnemyAI" index="7" instance=ExtResource( 3 )]
+[node name="SharpShootEnemy" parent="EnemyAI" index="6" instance=ExtResource( 3 )]
 position = Vector2( 416, 160 )
 
 [editable path="GUI/GameOver"]

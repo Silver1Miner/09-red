@@ -64,7 +64,7 @@ func AI_attack(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
 
 func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 	print(pawn.cell)
-	var damage = clamp(pawn.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
+	var damage = clamp(int(pawn.attack/2.0) - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	if pawn.pawn_type == 3:
 		if get_parent().team1_units[target_cell].pawn_type != 3:
 			get_parent().team1_units[target_cell].set_on_fire()
@@ -73,7 +73,7 @@ func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 func AI_move(pawn, end_cell) -> void:
 	cursor.set_cell(end_cell)
 	if get_parent().is_occupied(end_cell):
-		push_error("ai trying to move into occupied cell")
+		print("ai trying to move into occupied cell")
 	pawn.walk_along(pathfinder.calculate_point_path(pawn.cell, end_cell))
 	if not get_parent().team2_units.erase(pawn.prev_cell):
 		print("unit not found")

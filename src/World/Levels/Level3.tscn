@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/World/World.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/World/Pawns/PawnEnemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/World/Pawns/EnemyPawns/GrenadeEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/World/Pawns/EnemyPawns/TankEnemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/World/Pawns/PlayerPawns/Ranger.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/World/Pawns/PlayerPawns/Antitank.tscn" type="PackedScene" id=10]
@@ -29,39 +28,33 @@ position = Vector2( 160, 160 )
 [node name="Sharpshooter" parent="Team1" index="3" instance=ExtResource( 11 )]
 position = Vector2( 224, 32 )
 
-[node name="GrenadeEnemy" parent="EnemyAI" index="0" instance=ExtResource( 3 )]
-position = Vector2( 448, 192 )
-
-[node name="TankEnemy" parent="EnemyAI" index="1" instance=ExtResource( 6 )]
+[node name="TankEnemy" parent="EnemyAI" index="0" instance=ExtResource( 6 )]
 position = Vector2( 320, 96 )
 
-[node name="TankEnemy2" parent="EnemyAI" index="2" instance=ExtResource( 6 )]
+[node name="TankEnemy2" parent="EnemyAI" index="1" instance=ExtResource( 6 )]
 position = Vector2( 544, 0 )
 guarding = true
 
-[node name="RangerEnemy" parent="EnemyAI" index="3" instance=ExtResource( 14 )]
+[node name="RangerEnemy" parent="EnemyAI" index="2" instance=ExtResource( 14 )]
 position = Vector2( 480, 384 )
 
-[node name="RangerEnemy2" parent="EnemyAI" index="4" instance=ExtResource( 14 )]
-position = Vector2( 544, 320 )
-
-[node name="RangerEnemy3" parent="EnemyAI" index="5" instance=ExtResource( 14 )]
+[node name="RangerEnemy3" parent="EnemyAI" index="3" instance=ExtResource( 14 )]
 position = Vector2( 64, 384 )
 
-[node name="PawnEnemy" parent="EnemyAI" index="6" instance=ExtResource( 2 )]
+[node name="PawnEnemy" parent="EnemyAI" index="4" instance=ExtResource( 2 )]
 position = Vector2( 192, 224 )
 
-[node name="PawnEnemy2" parent="EnemyAI" index="7" instance=ExtResource( 2 )]
+[node name="PawnEnemy2" parent="EnemyAI" index="5" instance=ExtResource( 2 )]
 position = Vector2( 320, 288 )
 guarding = true
 
-[node name="PawnEnemy3" parent="EnemyAI" index="8" instance=ExtResource( 2 )]
+[node name="PawnEnemy3" parent="EnemyAI" index="6" instance=ExtResource( 2 )]
 position = Vector2( 416, 288 )
 
-[node name="SharpShootEnemy" parent="EnemyAI" index="9" instance=ExtResource( 13 )]
+[node name="SharpShootEnemy" parent="EnemyAI" index="7" instance=ExtResource( 13 )]
 position = Vector2( 416, 128 )
 
-[node name="SharpShootEnemy2" parent="EnemyAI" index="10" instance=ExtResource( 13 )]
+[node name="SharpShootEnemy2" parent="EnemyAI" index="8" instance=ExtResource( 13 )]
 position = Vector2( 544, 256 )
 guarding = true
 
