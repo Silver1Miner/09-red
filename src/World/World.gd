@@ -55,8 +55,8 @@ func _ready() -> void:
 	if $GUI/Textbox.connect("text_finished", self, "_on_text_finished") != OK:
 		push_error("textbox signal connect fail")
 	recount_units()
-	if level_number in TextData.data:
-		$GUI/Textbox.initialize(TextData.data[level_number]["start"])
+	if level_number in TextData.level_text:
+		$GUI/Textbox.initialize(TextData.level_text[level_number]["start"])
 
 func _on_text_finished() -> void:
 	if turn_count == 1:
@@ -321,8 +321,8 @@ func _on_AI_finished() -> void:
 			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
-	if game_state == GAME_STATE.LOSE and level_number in TextData.data:
-		$GUI/Textbox.initialize(TextData.data[level_number]["lose"])
+	if game_state == GAME_STATE.LOSE and level_number in TextData.level_text:
+		$GUI/Textbox.initialize(TextData.level_text[level_number]["lose"])
 
 func lose_game() -> void:
 	game_state = GAME_STATE.LOSE
@@ -330,8 +330,8 @@ func lose_game() -> void:
 func win_game() -> void:
 	game_state = GAME_STATE.WIN
 	PlayerData.completed_levels[level_number] = true
-	if level_number in TextData.data:
-		$GUI/Textbox.initialize(TextData.data[level_number]["win"])
+	if level_number in TextData.level_text:
+		$GUI/Textbox.initialize(TextData.level_text[level_number]["win"])
 	else:
 		_on_ToOverWorld_pressed()
 	#$GUI/GameOver/Victory.visible = true

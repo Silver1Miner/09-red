@@ -1,12 +1,20 @@
 extends Control
 # Over World
+export var TextData: Resource = preload("res://src/Data/TextData.tres")
 
 func _ready() -> void:
-	pass
 	#$ToMission0.visible = PlayerData.completed_levels[0]
-	#$ToMission1.visible = PlayerData.completed_levels[0]
-	#$ToMission2.visible = PlayerData.completed_levels[1]
-	#$ToMission3.visible = PlayerData.completed_levels[2]
+	$ToMission1.visible = PlayerData.completed_levels[0]
+	$ToMission2.visible = PlayerData.completed_levels[1]
+	$ToMission3.visible = PlayerData.completed_levels[2]
+	if PlayerData.completed_levels[3]:
+		$Textbox.initialize(TextData.overworld_text[3])
+	elif PlayerData.completed_levels[2]:
+		$Textbox.initialize(TextData.overworld_text[2])
+	elif PlayerData.completed_levels[1]:
+		$Textbox.initialize(TextData.overworld_text[1])
+	elif PlayerData.completed_levels[0]:
+		$Textbox.initialize(TextData.overworld_text[0])
 
 func _on_ToMission1_pressed() -> void:
 	if get_tree().change_scene_to(PlayerData.level_1) != OK:
