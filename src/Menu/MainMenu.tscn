@@ -37,9 +37,9 @@ __meta__ = {
 
 [node name="Options" type="VBoxContainer" parent="."]
 margin_left = 50.0
-margin_top = 120.0
+margin_top = 150.0
 margin_right = 200.0
-margin_bottom = 330.0
+margin_bottom = 360.0
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
@@ -49,9 +49,10 @@ __meta__ = {
 margin_right = 150.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 150, 40 )
-text = "New Game"
+text = "Campaign"
 
 [node name="LoadGame" type="Button" parent="Options"]
+visible = false
 margin_top = 60.0
 margin_right = 150.0
 margin_bottom = 100.0
@@ -59,16 +60,16 @@ rect_min_size = Vector2( 0, 40 )
 text = "Continue"
 
 [node name="Settings" type="Button" parent="Options"]
-margin_top = 120.0
+margin_top = 60.0
 margin_right = 150.0
-margin_bottom = 160.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 0, 40 )
 text = "Settings"
 
 [node name="Quit" type="Button" parent="Options"]
-margin_top = 180.0
+margin_top = 120.0
 margin_right = 150.0
-margin_bottom = 220.0
+margin_bottom = 160.0
 rect_min_size = Vector2( 0, 40 )
 text = "Quit"
 

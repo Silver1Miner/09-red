@@ -17,12 +17,12 @@ var test_dialogue = {
 	"text":"the quick brown fox jumps over the lazy dog"},
 }
 var profiles = {
-	"red": preload("res://assets/Profiles/old-man.png"),
+	"red": preload("res://assets/Profiles/old-man-mask.png"),
 	"agent": preload("res://assets/Profiles/agent-red.png"),
 	"sapper": preload("res://assets/Profiles/engineer-red.png"),
 	"medic": preload("res://assets/Profiles/medic-red-base.png"),
 	"blu": preload("res://assets/Profiles/officer-blu-base.png"),
-	"oldman": preload("res://assets/Profiles/old-man-mask.png"),
+	"oldman": preload("res://assets/Profiles/old-man.png"),
 	"notoldman": preload("res://assets/Profiles/not-old-man.png"),
 	"scout": preload("res://assets/Profiles/scout-red.png"),
 	"sniper": preload("res://assets/Profiles/sniper-red.png"),

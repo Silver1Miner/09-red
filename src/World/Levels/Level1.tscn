@@ -18,23 +18,20 @@ position = Vector2( 192, 128 )
 [node name="Ranger" parent="Team1" index="1" instance=ExtResource( 2 )]
 position = Vector2( 192, 192 )
 
-[node name="RangerEnemy" parent="EnemyAI" index="0" instance=ExtResource( 5 )]
-position = Vector2( 608, 0 )
-
-[node name="RangerEnemy2" parent="EnemyAI" index="1" instance=ExtResource( 5 )]
+[node name="RangerEnemy2" parent="EnemyAI" index="0" instance=ExtResource( 5 )]
 position = Vector2( 544, 384 )
 guarding = true
 
-[node name="PawnEnemy" parent="EnemyAI" index="2" instance=ExtResource( 3 )]
+[node name="PawnEnemy" parent="EnemyAI" index="1" instance=ExtResource( 3 )]
 position = Vector2( 288, 224 )
 
-[node name="PawnEnemy2" parent="EnemyAI" index="3" instance=ExtResource( 3 )]
+[node name="PawnEnemy2" parent="EnemyAI" index="2" instance=ExtResource( 3 )]
 position = Vector2( 320, 352 )
 
-[node name="PawnEnemy3" parent="EnemyAI" index="4" instance=ExtResource( 3 )]
+[node name="PawnEnemy3" parent="EnemyAI" index="3" instance=ExtResource( 3 )]
 position = Vector2( 480, 224 )
 
-[node name="PawnEnemy4" parent="EnemyAI" index="5" instance=ExtResource( 3 )]
+[node name="PawnEnemy4" parent="EnemyAI" index="4" instance=ExtResource( 3 )]
 position = Vector2( 288, 160 )
 
 [node name="Cursor" parent="." index="8"]

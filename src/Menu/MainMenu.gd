@@ -9,12 +9,10 @@ func _ready() -> void:
 	AudioManager.play_music("res://assets/Music/Red_Tactics.ogg")
 
 func _on_NewGame_pressed() -> void:
-	print("New Game")
 	if get_tree().change_scene_to(PlayerData.over_world) != OK:
 		push_error("fail to load world")
 
 func _on_LoadGame_pressed() -> void:
-	print("Load Game")
 	if get_tree().change_scene_to(PlayerData.over_world) != OK:
 		push_error("fail to load world")
 
