@@ -86,4 +86,7 @@ guarding = true
 position = Vector2( 320, 192 )
 guarding = true
 
+[node name="Cursor" parent="." index="8"]
+position = Vector2( 128, 128 )
+
 [editable path="GUI/GameOver"]

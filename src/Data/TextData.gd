@@ -16,7 +16,7 @@ var overworld_text := {
 		"0": {"name":"", "profile":"notoldman",
 		"text":"I'm surprised and rather disappointed. You've already lost one of the nine towers I hired you to guard."},
 		"1": {"name":"", "profile":"blu",
-		"text":"Only because we were taking by surprise. I will not lose another tower."},
+		"text":"Only because we were taken by surprise. I will not lose another tower."},
 		"2": {"name":"", "profile":"blu",
 		"text":"As I recall, our deal was that we would receive payment so long as at least one tower was held?"},
 		"3": {"name":"", "profile":"notoldman",
@@ -52,7 +52,7 @@ var overworld_text := {
 	},
 	9: {
 		"0": {"name":"", "profile":"agent",
-		"text":"You completed all missions!"},
+		"text":"Congratulations! You've completed all the missions!"},
 		"1": {"name":"", "profile":"agent",
 		"text":"You can replay any mission at any time."},
 	},
@@ -89,9 +89,11 @@ var level_text := {
 		"text":"My job is to get down to the blue tower and capture it."},
 		"3": {"name":"", "profile":"agent",
 		"text":"Your job is to get me there, I guess. Move me onto the tower, and I will have a capture option."},
-		"4": {"name":"", "profile":"medic",
-		"text":"But don't worry, I'm here too! I'm the Medic. I won't be going on the field for now, but I'll patch the agent up in between missions."},
+		"4": {"name":"", "profile":"agent",
+		"text":"But don't worry, it won't be just you and me."},
 		"5": {"name":"", "profile":"medic",
+		"text":"Medic, reporting for duty. I won't be going on the field for now, but I'll patch the agent back up to full health in between missions."},
+		"6": {"name":"", "profile":"medic",
 		"text":"On the battlefield itself, you'll have to rely on the red resupply stations to heal up. Rest a guy on a tower, and he'll heal up each turn he's on it."},
 		},
 		"lose": {
@@ -135,8 +137,10 @@ var level_text := {
 	},
 	3: {
 		"start": {
-		"0": {"name":"red", "profile":"medic",
-		"text":"Good news, we got a rocket launcher assigned to our team!"},
+		"0": {"name":"red", "profile":"rocket",
+		"text":"Rocket Launcher unit, reporting for duty!"},
+		"1": {"name":"red", "profile":"rocket",
+		"text":"I'm a tough all-around soldier that can hopefully give you a bit more firepower."},
 		},
 		"lose": {
 		"0": {"name":"", "profile":"medic",
@@ -171,8 +175,8 @@ var level_text := {
 		"start": {
 		"0": {"name":"", "profile":"medic",
 		"text":"We got a mobile grenadier assigned to our team!"},
-		"1": {"name":"", "profile":"medic",
-		"text":"He can rain down explosive fire from afar."},
+		"1": {"name":"", "profile":"grenade",
+		"text":"Reporting for duty! I can rain down explosive fire from afar."},
 		},
 		"lose": {
 		"0": {"name":"", "profile":"medic",
@@ -233,8 +237,12 @@ var level_text := {
 		"start": {
 		"0": {"name":"", "profile":"medic",
 		"text":"Now we've got a Flamer of our own!"},
-		"1": {"name":"", "profile":"medic",
-		"text":"Let's see how they like being burned up."},
+		"1": {"name":"", "profile":"flamer",
+		"text":"..."},
+		"2": {"name":"", "profile":"medic",
+		"text":"Er... our flamer isn't exactly chatty..."},
+		"3": {"name":"", "profile":"medic",
+		"text":"But no matter. Let's see how the enemy likes being burned up!"},
 		},
 		"lose": {
 		"0": {"name":"", "profile":"medic",

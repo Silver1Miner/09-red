@@ -27,6 +27,9 @@ var profiles = {
 	"scout": preload("res://assets/Profiles/scout-red.png"),
 	"sniper": preload("res://assets/Profiles/sniper-red.png"),
 	"tank": preload("res://assets/Profiles/tank-red.png"),
+	"rocket": preload("res://assets/Profiles/soldier-red.png"),
+	"grenade": preload("res://assets/Profiles/grenadier-red.png"),
+	"flamer": preload("res://assets/Profiles/flamer-red.png")
 }
 
 func _ready() -> void:

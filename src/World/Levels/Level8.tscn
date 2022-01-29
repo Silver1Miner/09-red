@@ -84,10 +84,10 @@ position = Vector2( 608, 384 )
 guarding = true
 
 [node name="RangerEnemy" parent="EnemyAI" index="9" instance=ExtResource( 4 )]
-position = Vector2( 640, 480 )
+position = Vector2( 224, 288 )
 
 [node name="PawnEnemy" parent="EnemyAI" index="10" instance=ExtResource( 13 )]
-position = Vector2( 224, 416 )
+position = Vector2( 384, 480 )
 
 [node name="PawnEnemy2" parent="EnemyAI" index="11" instance=ExtResource( 13 )]
 position = Vector2( 448, 416 )
@@ -97,5 +97,8 @@ position = Vector2( 288, 480 )
 
 [node name="PawnEnemy4" parent="EnemyAI" index="13" instance=ExtResource( 13 )]
 position = Vector2( 64, 352 )
+
+[node name="Cursor" parent="." index="8"]
+position = Vector2( 192, 192 )
 
 [editable path="GUI/GameOver"]

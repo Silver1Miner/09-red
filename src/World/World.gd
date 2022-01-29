@@ -5,6 +5,7 @@ export var map_size = Vector2(21, 16)
 export var grid: Resource = preload("res://src/World/Grid.tres")
 export var TerrainData: Resource = preload("res://src/Data/TerrainData.tres")
 export var TextData: Resource = preload("res://src/Data/TextData.tres")
+export var PawnData: Resource = preload("res://src/Data/PawnData.tres")
 
 onready var terrain = $Terrain
 onready var pathfinder = $PathFinder
@@ -13,6 +14,7 @@ onready var range_display = $RangeDisplay
 onready var path_display = $PathDisplay
 onready var cursor = $Cursor
 onready var turn_change = $GUI/TurnChangeScreen
+onready var intel_view = $GUI/Intel
 var team1_units := {}
 var team2_units := {}
 
@@ -33,6 +35,8 @@ func _ready() -> void:
 	if cursor.connect("accept_pressed", self, "_on_accept_pressed") != OK:
 		push_error("connect fail")
 	if cursor.connect("cancel_pressed", self, "_on_cancel_pressed") != OK:
+		push_error("connect fail")
+	if cursor.connect("intel_pressed", self, "_on_intel_pressed") != OK:
 		push_error("connect fail")
 	if cursor.connect("attack_command", self, "_on_attack_command") != OK:
 		push_error("connect fail")
@@ -89,6 +93,10 @@ func _on_cursor_moved(cell) -> void:
 		path_display.draw_path(path)
 
 func _on_accept_pressed(cell) -> void:
+	if intel_view.visible:
+		intel_view.visible = false
+		AudioManager.play_sound(PlayerData.cancel_sound)
+		return
 	if cursor.cursor_state == cursor.STATE.TARGET:
 		if cursor.target_type == cursor.TARGET.ATTACK:
 			calculate_battle(cell)
@@ -104,6 +112,10 @@ func _on_accept_pressed(cell) -> void:
 		_move_active_unit(cell)
 
 func _on_cancel_pressed(cell) -> void:
+	if intel_view.visible:
+		intel_view.visible = false
+		AudioManager.play_sound(PlayerData.cancel_sound)
+		return
 	if _active_unit:
 		AudioManager.play_sound(PlayerData.cancel_sound)
 		_cancel_move()
@@ -125,6 +137,36 @@ func _on_cancel_pressed(cell) -> void:
 		else:
 			range_display.clear()
 		print(TerrainData.data[terrain.get_cellv(cell)])
+
+func _on_intel_pressed(cell) -> void:
+	if intel_view.visible:
+		intel_view.visible = false
+		AudioManager.play_sound(PlayerData.cancel_sound)
+		return
+	else:
+		if team1_units.has(cell):
+			intel_view.set_unit_intel_visible(true)
+			intel_view.set_red()
+			var intel_unit = team1_units[cell]
+			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, intel_unit.attack,TerrainData.data[terrain.get_cellv(cell)]["defense"])
+			intel_view.set_unit_name(PawnData.data[intel_unit.pawn_type]["name"])
+			intel_view.set_lore(PawnData.data[intel_unit.pawn_type]["lore"])
+			intel_view.set_profile(PawnData.data[intel_unit.pawn_type]["profile"])
+		elif team2_units.has(cell):
+			intel_view.set_unit_intel_visible(true)
+			intel_view.set_blu()
+			var intel_unit = team2_units[cell]
+			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, int(intel_unit.attack/2.0),TerrainData.data[terrain.get_cellv(cell)]["defense"])
+			intel_view.set_unit_name(PawnData.data[intel_unit.pawn_type]["name"])
+			intel_view.set_lore(PawnData.data[intel_unit.pawn_type]["enemy_lore"])
+			intel_view.set_profile(PawnData.data[intel_unit.pawn_type]["enemy_profile"])
+		else:
+			intel_view.set_unit_intel_visible(false)
+		intel_view.set_terrain_image(TerrainData.data[terrain.get_cellv(cell)]["image"])
+		intel_view.set_terrain_name(TerrainData.data[terrain.get_cellv(cell)]["name"])
+		intel_view.set_terrain_stats(TerrainData.data[terrain.get_cellv(cell)]["defense"], TerrainData.data[terrain.get_cellv(cell)]["move_cost"])
+		intel_view.set_terrain_lore(TerrainData.data[terrain.get_cellv(cell)]["lore"])
+		intel_view.visible = true
 
 func is_occupied(cell: Vector2) -> bool:
 	return true if team1_units.has(cell) or team2_units.has(cell) else false

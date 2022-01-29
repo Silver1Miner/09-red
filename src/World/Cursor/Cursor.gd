@@ -14,6 +14,7 @@ export var cell := Vector2.ZERO setget set_cell
 signal cursor_moved(cell)
 signal accept_pressed(cell)
 signal cancel_pressed(cell)
+signal intel_pressed(cell)
 signal attack_command()
 signal heal_command()
 signal build_command()
@@ -125,6 +126,9 @@ func _unhandled_input(event) -> void:
 		get_tree().set_input_as_handled()
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("click_right"):
 		emit_signal("cancel_pressed", cell)
+		get_tree().set_input_as_handled()
+	if event.is_action_pressed("ui_select") or event.is_action_pressed("click_middle"):
+		emit_signal("intel_pressed", cell)
 		get_tree().set_input_as_handled()
 	var should_move = event.is_pressed()
 	if event.is_echo():

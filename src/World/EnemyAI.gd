@@ -11,6 +11,7 @@ signal AI_finished()
 var agent_cell = Vector2.ZERO
 
 func execute_AI_turn() -> void:
+	yield(get_tree().create_timer(1.0), "timeout")
 	if get_parent().has_node("Team1/Agent"):
 		agent_cell = get_parent().get_node("Team1/Agent").cell
 	else:
@@ -25,6 +26,7 @@ func execute_AI_turn() -> void:
 			execute_order(child)
 		yield(get_tree().create_timer(1.0), "timeout")
 		child.set_pawn_state(child.STATE.READY)
+	yield(get_tree().create_timer(1.0), "timeout")
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:

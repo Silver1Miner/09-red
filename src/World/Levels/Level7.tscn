@@ -77,4 +77,7 @@ position = Vector2( 608, 192 )
 [node name="RangerEnemy" parent="EnemyAI" index="10" instance=ExtResource( 4 )]
 position = Vector2( 640, 32 )
 
+[node name="Cursor" parent="." index="8"]
+position = Vector2( 160, 160 )
+
 [editable path="GUI/GameOver"]

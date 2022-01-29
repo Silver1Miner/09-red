@@ -1,7 +1,7 @@
 extends Node
 
 var music_db = 0.5
-var sound_db = 0.5
+var sound_db = 0.3
 var completed_levels := 0
 
 func load_player_data() -> void:
