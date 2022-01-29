@@ -54,6 +54,7 @@ visible = false
 [node name="GameOver" parent="GUI" instance=ExtResource( 26 )]
 visible = false
 
+[connection signal="pressed" from="GUI/GameOver/Options/Close" to="." method="_on_Close_pressed"]
 [connection signal="pressed" from="GUI/GameOver/Options/Restart" to="." method="_on_Restart_pressed"]
 [connection signal="pressed" from="GUI/GameOver/Options/ToOverWorld" to="." method="_on_ToOverWorld_pressed"]
 [connection signal="pressed" from="GUI/GameOver/Options/ToMenu" to="." method="_on_ToMenu_pressed"]

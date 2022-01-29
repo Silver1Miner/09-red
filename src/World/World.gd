@@ -52,6 +52,8 @@ func _ready() -> void:
 		push_error("connect fail")
 	if cursor.connect("end_turn", self, "_on_end_turn") != OK:
 		push_error("connect fail")
+	if cursor.connect("open_options", self, "_on_open_options") != OK:
+		push_error("connect fail")
 	if $GUI/Textbox.connect("text_finished", self, "_on_text_finished") != OK:
 		push_error("textbox signal connect fail")
 	recount_units()
@@ -64,6 +66,7 @@ func _on_text_finished() -> void:
 	elif game_state == GAME_STATE.LOSE:
 		$GUI/GameOver/Victory.visible = false
 		$GUI/GameOver/Defeat.visible = true
+		$GUI/GameOver/Options/Close.visible = false
 		$GUI/GameOver.visible = true
 	elif game_state == GAME_STATE.WIN:
 		if get_tree().change_scene_to(PlayerData.over_world) != OK:
@@ -95,15 +98,18 @@ func _on_accept_pressed(cell) -> void:
 		range_display.clear()
 		cursor.set_cursor_state(cursor.STATE.MENU)
 	elif not _active_unit:
+		AudioManager.play_sound(PlayerData.confirm_sound)
 		_select_unit(cell)
 	elif _active_unit.is_selected:
 		_move_active_unit(cell)
 
 func _on_cancel_pressed(cell) -> void:
 	if _active_unit:
+		AudioManager.play_sound(PlayerData.cancel_sound)
 		_cancel_move()
 	elif cursor.cursor_state == cursor.STATE.MENU:
 		cursor.set_cursor_state(cursor.STATE.MOVING)
+		AudioManager.play_sound(PlayerData.cancel_sound)
 		_clear_active_unit()
 	else:
 		_clear_active_unit()
@@ -257,16 +263,27 @@ func _on_heal_command() -> void:
 
 func _on_build_command() -> void:
 	print("build command")
+	AudioManager.play_sound(PlayerData.build_sound)
 	change_terrain(_active_unit.cell)
 
 func calculate_battle(target_cell: Vector2) -> void:
 	print("unit at ", _active_unit.cell, " attacked unit at ", target_cell)
+	if _active_unit.pawn_type == 3:
+		AudioManager.play_sound(PlayerData.flame_sound)
+	elif _active_unit.pawn_type in [2,4]:
+		AudioManager.play_sound(PlayerData.cannon_sound)
+	elif _active_unit.pawn_type in [8,9]:
+		AudioManager.play_sound(PlayerData.shoot_sound)
+	else:
+		AudioManager.play_sound(PlayerData.shotgun_sound)
+	yield(get_tree().create_timer(0.2), "timeout")
 	var damage = clamp(_active_unit.attack - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	print(damage, " damage")
 	if _active_unit.pawn_type == 3:
 		if team2_units[target_cell].pawn_type != 3:
 			team2_units[target_cell].set_on_fire()
 	team2_units[target_cell].take_damage(damage)
+	AudioManager.play_sound(PlayerData.explosion_sound)
 	_confirm_move()
 
 func calculate_heal(target_cell: Vector2) -> void:
@@ -318,6 +335,7 @@ func _on_AI_finished() -> void:
 			yield(get_tree().create_timer(0.5), "timeout")
 		if child.take_fire_damage():
 			cursor.set_cell(child.cell)
+			AudioManager.play_sound(PlayerData.explosion_sound)
 			yield(get_tree().create_timer(0.5), "timeout")
 	cursor.visible = true
 	cursor.set_cursor_state(cursor.STATE.MOVING)
@@ -340,6 +358,12 @@ func win_game() -> void:
 	#$GUI/GameOver/Defeat.visible = false
 	#$GUI/GameOver.visible = true
 
+func _on_open_options() -> void:
+	$GUI/GameOver.visible = true
+	$GUI/GameOver/Options/Close.visible = true
+	$GUI/GameOver/Defeat.visible = false
+	$GUI/GameOver/Victory.text = "Options"
+
 func _on_Restart_pressed() -> void:
 	if get_tree().reload_current_scene() != OK:
 		push_error("failed to restart scene")
@@ -351,3 +375,6 @@ func _on_ToOverWorld_pressed() -> void:
 func _on_ToMenu_pressed() -> void:
 	if get_tree().change_scene_to(PlayerData.main_menu) != OK:
 		push_error("fail to go to main menu")
+
+func _on_Close_pressed() -> void:
+	$GUI/GameOver.visible = false

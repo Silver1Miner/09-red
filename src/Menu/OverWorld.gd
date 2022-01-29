@@ -3,6 +3,7 @@ extends Control
 export var TextData: Resource = preload("res://src/Data/TextData.tres")
 
 func _ready() -> void:
+	PlayerData.load_player_data()
 	#$ToMission0.visible = PlayerData.completed_levels > 0
 	$ToMission1.visible = PlayerData.completed_levels >= 0
 	$ToMission2.visible = PlayerData.completed_levels >= 1

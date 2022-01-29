@@ -60,6 +60,8 @@ func _set_HP(new_hp) -> void:
 
 func take_damage(damage) -> void:
 	_set_HP(hp - damage)
+	if damage < 0:
+		AudioManager.play_sound(PlayerData.heal_sound)
 
 func destroyed() -> void:
 	emit_signal("destroyed", cell, pawn_type)
@@ -122,6 +124,12 @@ func walk_along(path: PoolVector2Array) -> void:
 		curve.add_point(grid.get_map_position(point) - position)
 	prev_cell = cell
 	cell = path[-1]
+	if pawn_type == 4:
+		AudioManager.play_sound(PlayerData.wheel)
+	elif pawn_type in [3,5]:
+		AudioManager.play_sound(PlayerData.tread)
+	else:
+		AudioManager.play_sound(PlayerData.footstep)
 	self._is_walking = true
 
 func undo_move() -> void:

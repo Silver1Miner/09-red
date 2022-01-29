@@ -66,6 +66,14 @@ func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 	print(pawn.cell)
 	var damage = clamp(int(pawn.attack/2.0) - TerrainData.data[terrain.get_cellv(target_cell)]["defense"],0,100)
 	if pawn.pawn_type == 3:
+		AudioManager.play_sound(PlayerData.flame_sound)
+	elif pawn.pawn_type in [2,4]:
+		AudioManager.play_sound(PlayerData.cannon_sound)
+	elif pawn.pawn_type in [8,9]:
+		AudioManager.play_sound(PlayerData.shoot_sound)
+	else:
+		AudioManager.play_sound(PlayerData.shotgun_sound)
+	if pawn.pawn_type == 3:
 		if get_parent().team1_units[target_cell].pawn_type != 3:
 			get_parent().team1_units[target_cell].set_on_fire()
 	get_parent().team1_units[target_cell].take_damage(damage)

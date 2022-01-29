@@ -23,6 +23,7 @@ signal wait_command()
 signal end_turn()
 signal focus_on_attack()
 signal focus_on_heal()
+signal open_options()
 
 var valid_targets := []
 var current_target := 0
@@ -196,3 +197,6 @@ func _on_Attack_mouse_entered() -> void:
 
 func _on_Heal_mouse_entered() -> void:
 	emit_signal("focus_on_heal")
+
+func _on_Options_pressed() -> void:
+	emit_signal("open_options")

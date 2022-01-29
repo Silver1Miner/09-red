@@ -54,27 +54,33 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -63.0
-margin_top = -20.0
+margin_top = -50.0
 margin_right = 63.0
-margin_bottom = 125.0
+margin_bottom = 150.0
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Restart" type="Button" parent="Options"]
+[node name="Close" type="Button" parent="Options"]
 margin_right = 126.0
 margin_bottom = 35.5135
-text = "Restart"
+text = "Return"
 
-[node name="ToOverWorld" type="Button" parent="Options"]
+[node name="Restart" type="Button" parent="Options"]
 margin_top = 55.0
 margin_right = 126.0
 margin_bottom = 90.5135
-text = "OverWorld"
+text = "Restart"
 
-[node name="ToMenu" type="Button" parent="Options"]
+[node name="ToOverWorld" type="Button" parent="Options"]
 margin_top = 110.0
 margin_right = 126.0
 margin_bottom = 145.514
+text = "OverWorld"
+
+[node name="ToMenu" type="Button" parent="Options"]
+margin_top = 165.0
+margin_right = 126.0
+margin_bottom = 200.514
 text = "Main Menu"

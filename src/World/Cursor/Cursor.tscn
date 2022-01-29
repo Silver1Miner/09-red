@@ -20,6 +20,7 @@ script = ExtResource( 3 )
 position = Vector2( 16, 16 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -139,16 +140,15 @@ margin_bottom = 71.3685
 text = "Save"
 
 [node name="Options" type="Button" parent="MapMenu"]
-visible = false
-margin_top = 75.0
-margin_right = 67.0
-margin_bottom = 96.3685
-text = "Options"
-
-[node name="EndTurn" type="Button" parent="MapMenu"]
 margin_top = 25.0
 margin_right = 67.0
 margin_bottom = 46.3685
+text = "Options"
+
+[node name="EndTurn" type="Button" parent="MapMenu"]
+margin_top = 50.0
+margin_right = 67.0
+margin_bottom = 71.3685
 text = "End Turn"
 
 [connection signal="pressed" from="UnitMenu/Cancel" to="." method="_on_Cancel_pressed"]
@@ -163,4 +163,5 @@ text = "End Turn"
 [connection signal="pressed" from="UnitMenu/Item" to="." method="_on_Item_pressed"]
 [connection signal="pressed" from="UnitMenu/Wait" to="." method="_on_Wait_pressed"]
 [connection signal="pressed" from="MapMenu/Cancel" to="." method="_on_Cancel_pressed"]
+[connection signal="pressed" from="MapMenu/Options" to="." method="_on_Options_pressed"]
 [connection signal="pressed" from="MapMenu/EndTurn" to="." method="_on_EndTurn_pressed"]
