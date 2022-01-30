@@ -6,5 +6,8 @@
 [node name="RangerEnemy" instance=ExtResource( 1 )]
 pawn_type = 1
 
-[node name="Sprite" parent="PathFollow2D" index="1"]
+[node name="Sprite" parent="PathFollow2D" index="0"]
 texture = ExtResource( 2 )
+
+[node name="Fire" parent="PathFollow2D" index="1"]
+frame = 0

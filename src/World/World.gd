@@ -148,7 +148,7 @@ func _on_intel_pressed(cell) -> void:
 			intel_view.set_unit_intel_visible(true)
 			intel_view.set_red()
 			var intel_unit = team1_units[cell]
-			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, intel_unit.attack,TerrainData.data[terrain.get_cellv(cell)]["defense"])
+			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, intel_unit.attack,intel_unit.move_type, intel_unit.move_range, intel_unit.attack_range)
 			intel_view.set_unit_name(PawnData.data[intel_unit.pawn_type]["name"])
 			intel_view.set_lore(PawnData.data[intel_unit.pawn_type]["lore"])
 			intel_view.set_profile(PawnData.data[intel_unit.pawn_type]["profile"])
@@ -156,7 +156,7 @@ func _on_intel_pressed(cell) -> void:
 			intel_view.set_unit_intel_visible(true)
 			intel_view.set_blu()
 			var intel_unit = team2_units[cell]
-			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, int(intel_unit.attack/2.0),TerrainData.data[terrain.get_cellv(cell)]["defense"])
+			intel_view.set_stats_text(intel_unit.hp, intel_unit.max_hp, int(intel_unit.attack/2.0),intel_unit.move_type, intel_unit.move_range, intel_unit.attack_range)
 			intel_view.set_unit_name(PawnData.data[intel_unit.pawn_type]["name"])
 			intel_view.set_lore(PawnData.data[intel_unit.pawn_type]["enemy_lore"])
 			intel_view.set_profile(PawnData.data[intel_unit.pawn_type]["enemy_profile"])
@@ -325,7 +325,6 @@ func calculate_battle(target_cell: Vector2) -> void:
 		if team2_units[target_cell].pawn_type != 3:
 			team2_units[target_cell].set_on_fire()
 	team2_units[target_cell].take_damage(damage)
-	AudioManager.play_sound(PlayerData.explosion_sound)
 	_confirm_move()
 
 func calculate_heal(target_cell: Vector2) -> void:
@@ -365,6 +364,7 @@ func _on_end_turn() -> void:
 
 func _on_AI_finished() -> void:
 	print("AI finished")
+	yield(get_tree().create_timer(2.0), "timeout")
 	turn_count += 1
 	AudioManager.play_music("res://assets/Music/Red_Tactics.ogg")
 	turn_change.play_turn_change(turn_count, "Player")

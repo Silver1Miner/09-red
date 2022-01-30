@@ -62,6 +62,12 @@ func take_damage(damage) -> void:
 	_set_HP(hp - damage)
 	if damage < 0:
 		AudioManager.play_sound(PlayerData.heal_sound)
+		_anim_player.play("heal")
+	else:
+		_anim_player.play("damage")
+		$PathFollow2D/DamageFlash.frame = 0
+		$PathFollow2D/DamageFlash.play()
+		AudioManager.play_sound(PlayerData.explosion_sound)
 
 func destroyed() -> void:
 	emit_signal("destroyed", cell, pawn_type)
@@ -166,3 +172,7 @@ func set_is_selected(value: bool) -> void:
 func _set_is_walking(value: bool) -> void:
 	_is_walking = value
 	set_process(_is_walking)
+
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	if anim_name in ["heal", "damage"]:
+		set_pawn_state(STATE.READY)

@@ -1,7 +1,7 @@
 extends Node
 
 var music_db = 0.5
-var sound_db = 0.3
+var sound_db = 0.2
 var completed_levels := 0
 
 func load_player_data() -> void:
@@ -41,11 +41,11 @@ var damage_sound := "res://assets/Sound/impactPunch_heavy_000.ogg"
 var confirm_sound := "res://assets/Sound/select_005.ogg"
 var cancel_sound := "res://assets/Sound/back_001.ogg"
 var shoot_sound := "res://assets/Sound/346537__nioczkus__perdition-1911-pistol.ogg"
-var shotgun_sound := "res://assets/Sound/163455__lemudcrab__shotgun-shot.wav"
+var shotgun_sound := "res://assets/Sound/163455__lemudcrab__shotgun-shot.ogg"
 var cannon_sound := "res://assets/Sound/581597__samsterbirdies__gun-cannon.ogg"
-var flame_sound := "res://assets/Sound/447941__breviceps__blast-flamethrower-cooldown.wav"
+var flame_sound := "res://assets/Sound/447941__breviceps__blast-flamethrower-cooldown.ogg"
 var explosion_sound := "res://assets/Sound/Splode.wav"
-var footstep := "res://assets/Sound/footstep_concrete_003.ogg"
-var tread := "res://assets/Sound/387977__giddster__plastic-toy-rolling.wav"
+var footstep := "res://assets/Sound/521587__fission9__hiking-boot-footsteps-on-grass.ogg"
+var tread := "res://assets/Sound/387977__giddster__plastic-toy-rolling.ogg"
 var wheel := "res://assets/Sound/545204__daybreaker64__toy-car-tire-spin.wav"
 var build_sound := "res://assets/Sound/engineCircular_000.ogg"

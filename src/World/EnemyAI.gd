@@ -26,7 +26,7 @@ func execute_AI_turn() -> void:
 			execute_order(child)
 		yield(get_tree().create_timer(1.0), "timeout")
 		child.set_pawn_state(child.STATE.READY)
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	emit_signal("AI_finished")
 
 func execute_order(pawn: Pawn) -> void:
@@ -62,7 +62,7 @@ func AI_attack(pawn: Pawn, move_range: Array, target_cell: Vector2) -> void:
 			AI_move(pawn, cell)
 			yield(get_tree().create_timer(0.5), "timeout")
 			AI_battle(pawn, target_cell)
-			break
+			return
 
 func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 	print(pawn.cell)
@@ -75,6 +75,7 @@ func AI_battle(pawn: Pawn, target_cell: Vector2) -> void:
 		AudioManager.play_sound(PlayerData.shoot_sound)
 	else:
 		AudioManager.play_sound(PlayerData.shotgun_sound)
+	yield(get_tree().create_timer(0.2), "timeout")
 	if pawn.pawn_type == 3:
 		if get_parent().team1_units[target_cell].pawn_type != 3:
 			get_parent().team1_units[target_cell].set_on_fire()
